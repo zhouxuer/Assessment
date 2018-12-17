@@ -1,9 +1,27 @@
 <template>
   <div>
-    <nuxt/>
+
+    <div class="nav">
+      <Nav/>
+    </div>
+
+    <div class="nuxt">
+      <nuxt/>
+    </div>
+
+    <div class="foot">
+      <Footer class="layout-footer-center">2011-2016 &copy; TalkingData</Footer>
+    </div>
   </div>
 </template>
-
+<script>
+import Nav from '~/components/Nav.vue'
+export default {
+  components: {
+    Nav
+  }
+}
+</script>
 <style>
 html {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
@@ -51,5 +69,8 @@ html {
 .button--grey:hover {
   color: #fff;
   background-color: #35495e;
+}
+.layout-footer-center {
+  text-align: center;
 }
 </style>

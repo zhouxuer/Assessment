@@ -13,11 +13,8 @@ module.exports = {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: pkg.description }
     ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
-
   /*
   ** Customize the progress-bar color
   */
@@ -26,15 +23,15 @@ module.exports = {
   /*
   ** Global CSS
   */
-  css: [
-  ],
+  css: [{ src: 'static/less/base.sass', lang: 'less' }],
+  css: ['~assets/css/global.css'],
+  css: ['~assets/css/main.css'],
 
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: [
-  ],
-
+  plugins: [{ src: '~plugins/iview', ssr: true }],
+  plugins: ['~/plugins/ui'],
   /*
   ** Nuxt.js modules
   */
@@ -65,6 +62,7 @@ module.exports = {
           loader: 'eslint-loader',
           exclude: /(node_modules)/
         })
+        // config.resolve.extensions.push('.less')
       }
     }
   }
