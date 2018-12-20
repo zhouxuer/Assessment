@@ -1,5 +1,6 @@
 <template>
   <div>
+    <bg/>
     <div class="aaa">
       <div class="bbb">11</div>
     </div>
@@ -15,7 +16,12 @@
   </div>
 </template>
 <script>
-export default {}
+import bg from '~/assets/bg.vue'
+export default {
+  components: {
+    bg
+  }
+}
 </script>
 <style scoped lang="less">
 .aaa {
