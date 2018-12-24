@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="sss">
     <bg/>
     <div class="aaa">
       <div class="bbb">11</div>
@@ -24,10 +24,15 @@ export default {
 }
 </script>
 <style scoped lang="less">
+// .sss {
+//   width: 1900px;
+//   height: 800px;
+//   background-color: rgb(32, 32, 32);
+// }
 .aaa {
-  width: 200px;
-  height: 200px;
-  background-color: #f5ff;
+  width: 1900px;
+  height: 800px;
+  background-color: rgb(34, 34, 34);
   .bbb {
     width: 50px;
     height: 50px;
