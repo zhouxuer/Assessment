@@ -52,10 +52,18 @@ export default {
 </script>
 <style scoped lang="less">
 .layout {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
   .ivu-menu-dark {
     height: 70px;
     line-height: 70px;
-    background-color: #fff;
+    border-bottom: 1px solid rgb(95, 95, 95);
+    background-color: rgba(255, 255, 255, 0.014);
+    &:hover {
+      background-color: rgba(75, 75, 75, 0.404);
+    }
   }
   .layout-logo {
     width: 100px;

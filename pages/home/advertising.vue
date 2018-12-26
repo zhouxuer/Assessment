@@ -52,6 +52,9 @@ export default {
 </script>
 <style scoped lang="less">
 .aaa {
+  position: absolute;
+  z-index: -1;
+  top: 0;
   width: 100%;
   .advertising-img {
     max-width: 100%;

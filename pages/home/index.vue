@@ -66,7 +66,7 @@ export default {
 <style scoped lang="less">
 .sss {
   width: 100%;
-  background-color: rgb(238, 238, 238);
+  // background-color: rgb(238, 238, 238);
   text-align: center;
   position: relative;
   .aaa {
