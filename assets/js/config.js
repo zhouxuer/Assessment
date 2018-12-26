@@ -3,7 +3,7 @@ const navData = [
   {
     icon: '',
     title: '首页',
-    to: '/',
+    to: '/home',
     name: '1'
   },
   {
