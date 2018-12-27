@@ -9,9 +9,9 @@
       <nuxt/>
     </div>
 
-    <div class="foot">
+    <!-- <div class="foot">
       <Footer class="layout-footer-center">2011-2016 &copy; TalkingData</Footer>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>

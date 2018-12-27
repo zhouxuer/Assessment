@@ -5,31 +5,16 @@
     loop
     class="aaa"
   >
-    <CarouselItem>
-      <div class="demo-carousel">
-        <img 
-          class="advertising-img"
-          src="~/assets/img/advertising01.jpg"
-        >
-      </div>
+    <CarouselItem
+      v-for="(item) in advertImgArr"
+      :key="item.id"
+    >
+      <img
+        :src="item.url"
+        class="demo-carousel advertising-img"
+      >
     </CarouselItem>
-    <CarouselItem>
-      <div class="demo-carousel">
-        <img 
-          class="advertising-img"
-          src="~/assets/img/advertising02.jpg"
-        >
-      </div>
-    </CarouselItem>
-    <CarouselItem>
-      <div class="demo-carousel">
-        <img 
-          class="advertising-img"
-          src="~/assets/img/advertising03.jpg"
-        >
-      </div>
-    </CarouselItem>
-    <CarouselItem>
+    <!-- <CarouselItem>
       <div class="demo-carousel">
         <video
           src="~/assets/img/advertising04.mp4"
@@ -38,35 +23,41 @@
           preload="none"
         >1</video>
       </div>
-    </CarouselItem>
+    </CarouselItem> -->
   </Carousel>
 </template>
 <script>
 export default {
   data() {
     return {
-      value2: 0
+      value2: 0,
+      advertImgArr: [
+        {
+          id: 1,
+          url: require('~/assets/img/advertising01.jpg')
+        },
+        {
+          id: 2,
+          url: require('~/assets/img/advertising02.jpg')
+        },
+        {
+          id: 3,
+          url: require('~/assets/img/advertising03.jpg')
+        },
+        {
+          id: 4,
+          url: require('~/assets/img/advertising04.jpg')
+        }
+      ]
     }
   }
 }
 </script>
 <style scoped lang="less">
 .aaa {
-  position: absolute;
-  z-index: -1;
-  top: 0;
   width: 100%;
   .advertising-img {
     max-width: 100%;
-    // max-width: ;
-    // max-height: 800px;
-    // position: absolute;
-    // top: 0;
-    // right: 0;
-    // bottom: 0;
-    // left: 0;
-    // background-size: cover;
-    // background-position: 50%;
   }
 }
 </style>

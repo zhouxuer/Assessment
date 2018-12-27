@@ -59,10 +59,10 @@ export default {
   .ivu-menu-dark {
     height: 70px;
     line-height: 70px;
-    border-bottom: 1px solid rgb(95, 95, 95);
-    background-color: rgba(255, 255, 255, 0.014);
+    border-bottom: 0.5px solid rgba(230, 230, 230, 0.801);
+    background-color: rgba(255, 255, 255, 0);
     &:hover {
-      background-color: rgba(75, 75, 75, 0.404);
+      background-color: rgba(75, 75, 75, 0.246);
     }
   }
   .layout-logo {
@@ -80,26 +80,20 @@ export default {
     margin: 0 auto;
     .ivu-menu-submenu {
       padding: 0 50px;
-      color: rgb(136, 136, 136);
     }
     .ivu-menu-item {
       padding: 0 50px;
-      color: rgb(136, 136, 136);
-      #hover {
-        background-color: rgb(40, 44, 66);
-        color: rgb(255, 255, 255);
-      }
     }
   }
 }
 .ivu-menu-dark.ivu-menu-horizontal .ivu-menu-item:hover,
 .ivu-menu-dark.ivu-menu-horizontal .ivu-menu-submenu:hover {
-  background-color: rgb(40, 44, 66);
-  color: rgb(255, 255, 255);
+  background-color: rgba(190, 190, 190, 0.5);
+  color: rgb(98, 98, 98);
 }
 .ivu-menu-dark.ivu-menu-horizontal .ivu-menu-item-active,
 .ivu-menu-dark.ivu-menu-horizontal .ivu-menu-submenu-active {
-  color: rgb(40, 44, 66);
+  color: rgb(255, 255, 255);
   font-weight: bold;
 }
 </style>
