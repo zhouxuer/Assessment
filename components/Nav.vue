@@ -42,7 +42,7 @@
 <script>
 import config from '~/assets/js/config.js'
 export default {
-  data() {
+  data () {
     return {
       theme1: 'light',
       config: config.navData

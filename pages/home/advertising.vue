@@ -13,6 +13,10 @@
         :src="item.url"
         class="demo-carousel advertising-img"
       >
+      <!-- <img
+        class="demo-carousel advertising-text"
+        src="../../assets/img/advertising.png"
+      > -->
     </CarouselItem>
     <!-- <CarouselItem>
       <div class="demo-carousel">
@@ -28,7 +32,7 @@
 </template>
 <script>
 export default {
-  data() {
+  data () {
     return {
       value2: 0,
       advertImgArr: [
@@ -58,6 +62,14 @@ export default {
   width: 100%;
   .advertising-img {
     max-width: 100%;
+    position: relative;
   }
+  // .advertising-text {
+  //   position: absolute;
+  //   // min-width: 20%;
+  //   max-width: 8%;
+  //   z-index: 10000;
+  //   top: 80px;
+  // }
 }
 </style>
