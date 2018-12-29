@@ -43,8 +43,21 @@ const navData = [
     name: '5'
   }
 ]
+const timeStamp = Math.round(new Date().getTime() / 1000).toString()
+// nonceStr (L) {
+let L = 32
+let nonceStr = ''
+let randomchar = function () {
+  let n = Math.floor(Math.random() * 62)
+  if (n < 10) return n
+  if (n < 36) return String.fromCharCode(n + 55)
+  return String.fromCharCode(n + 61)
+}
+while (nonceStr.length < L) nonceStr += randomchar()
 
 export default {
   httpto,
-  navData
+  navData,
+  timeStamp,
+  nonceStr
 }

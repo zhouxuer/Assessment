@@ -17,7 +17,7 @@
         >
           <img 
             class="filter-img"
-            src="~/assets/img/filter01.jpg"
+            src="~/static/img/filter01.jpg"
           >
           <span class="filter-span">
             <a>人像滤镜</a>
@@ -29,7 +29,7 @@
         >
           <img 
             class="filter-img"
-            src="~/assets/img/filter02.jpg"
+            src="~/static/img/filter02.jpg"
           >
           <span class="filter-span">
             <a>风景滤镜</a>
