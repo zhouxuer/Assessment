@@ -13,6 +13,7 @@ import bg from '~/assets/bg.vue'
 import config from '~/assets/js/config.js'
 import axios from 'axios'
 import md5 from 'md5'
+import Qs from 'Qs'
 export default {
   components: {
     bg
@@ -61,9 +62,7 @@ export default {
       })
       const param = params[0]
       console.log(param)
-      axios.post('https://api.ai.qq.com/fcgi-bin/nlp/nlp_texttrans', param,
-        { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
-      )
+      axios.post('https://api.ai.qq.com/fcgi-bin/nlp/nlp_texttrans', Qs.stringify(param))
         .then(res => {
           console.log(res)
         }).catch(err => {
