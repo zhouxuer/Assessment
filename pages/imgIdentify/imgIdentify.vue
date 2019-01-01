@@ -31,14 +31,14 @@ export default {
   },
   methods: {
     sss () {
-      let params = [{
-        appId: this.appId,
-        timeStamp: config.timeStamp,
-        nonceStr: config.nonceStr,
+      let params = {
+        app_id: this.appId,
+        time_stamp: config.timeStamp,
+        nonce_str: config.nonceStr,
         type: '0',
         text: this.value1,
         sign: ''
-      }]
+      }
       // 将<key, value>请求参数对按key进行字典升序排序，得到有序的参数对列表N
       const N = Object.keys(params).sort()
       console.log(N)
@@ -52,17 +52,24 @@ export default {
       const F = FF.join('&').toUpperCase()
       console.log(F)
       // 将应用密钥以app_key为键名，组成URL键值拼接到字符串T末尾，得到字符串S（如：key1=value1&key2=value2&app_key=密钥)
-      const S = `${F}&app_id=${this.appKey}`
+      const S = `${F}&app_key=${this.appKey}`
       console.log(S)
       // 对字符串S进行MD5运算，将得到的MD5值所有字符转换成大写，得到接口请求签名
       const sign = md5(S).toUpperCase()
       console.log(sign)
-      params.forEach(item => {
-        item.sign = sign
-      })
-      const param = params[0]
-      console.log(param)
-      axios.post('https://api.ai.qq.com/fcgi-bin/nlp/nlp_texttrans', Qs.stringify(param))
+      // params.forEach(item => {
+      //   item.sign = sign
+      // })
+      const paramter = {
+        app_id: this.appId,
+        time_stamp: config.timeStamp,
+        nonce_str: config.nonceStr,
+        type: '0',
+        text: this.value1,
+        sign: sign
+      }
+      console.log(paramter)
+      axios.post('https://api.ai.qq.com/fcgi-bin/nlp/nlp_texttrans', Qs.stringify(paramter))
         .then(res => {
           console.log(res)
         }).catch(err => {

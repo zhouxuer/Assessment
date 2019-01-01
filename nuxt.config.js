@@ -38,7 +38,7 @@ module.exports = {
   */
   modules: [
     // Doc: https://github.com/nuxt-community/axios-module#usage
-    '@nuxtjs/axios',
+    // '@nuxtjs/axios',
     // 请求代理配置，解决跨域
     '@gauseen/nuxt-proxy'
   ],
