@@ -24,7 +24,9 @@ module.exports = {
   ** Global CSS
   */
   css: [{ src: 'static/less/base.sass', lang: 'less' }],
+  // eslint-disable-next-line no-dupe-keys
   css: ['~assets/css/global.css'],
+  // eslint-disable-next-line no-dupe-keys
   css: ['~assets/css/main.css'],
 
   /*
@@ -36,8 +38,13 @@ module.exports = {
   */
   modules: [
     // Doc: https://github.com/nuxt-community/axios-module#usage
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    // 请求代理配置，解决跨域
+    '@gauseen/nuxt-proxy'
   ],
+  proxyTable: {
+    '/api': { target: 'http://example.com', ws: false }
+  },
   /*
   ** Axios module configuration
   */
@@ -52,7 +59,7 @@ module.exports = {
     /*
     ** You can extend webpack config here
     */
-    extend(config, ctx) {
+    extend (config, ctx) {
       // Run ESLint on save
       if (ctx.isDev && ctx.isClient) {
         config.module.rules.push({
