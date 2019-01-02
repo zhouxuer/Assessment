@@ -33,17 +33,28 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [{ src: '~plugins/iview', ssr: true }],
+  proxy: {
+    '/app/*': {
+      target: 'http://xxx:8080',
+      secure: false
+    }
+  },
   /*
   ** Nuxt.js modules
   */
   modules: [
     // Doc: https://github.com/nuxt-community/axios-module#usage
-    // '@nuxtjs/axios',
-    // 请求代理配置，解决跨域
-    '@gauseen/nuxt-proxy'
+    '@nuxtjs/axios'
   ],
-  proxyTable: {
-    '/api': { target: 'http://example.com', ws: false }
+  // eslint-disable-next-line no-dupe-keys
+  modules: [
+    // Simple usage
+    '@nuxtjs/proxy'
+  ],
+  // eslint-disable-next-line no-dupe-keys
+  proxy: {
+    // Simple proxy
+    '/fcgi-bin': 'https://api.ai.qq.com/'
   },
   /*
   ** Axios module configuration
@@ -70,16 +81,5 @@ module.exports = {
         })
       }
     }
-    // extend(config, ctx) {
-    //   // Run ESLint on save
-    //   if (ctx.isDev && ctx.isClient) {
-    //     config.module.rules.push({
-    //       enforce: 'pre',
-    //       test: /\.(js|vue)$/,
-    //       loader: 'eslint-loader',
-    //       exclude: /(node_modules)/
-    //     })
-    //   }
-    // }
   }
 }
