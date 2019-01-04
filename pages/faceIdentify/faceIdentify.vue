@@ -4,10 +4,12 @@
       <bg/>
     </div>
     <div class="content">
-      <input type="file" accept="image/*" @change="changeImg($event)">
-      <img :src="imgData" alt="">
+      <a class="contentFile">上传文件
+        <input type="file" class="contentInput" @change="changeImg($event)">
+      </a>
+      <Button icon="ios-cloud-upload-outline">Upload files</Button>
+      <img :src="imgUrl" alt="">
       <Button type="primary" @click="sss">一键美颜</Button>
-      <!-- <Input v-model="imgData" type="textarea" :rows="30" class="input" /> -->
     </div>
   </div>
 </template>
@@ -23,6 +25,8 @@ export default {
   },
   data () {
     return {
+      imgUrl: '',
+      imgDataTop: '',
       imgData: '',
       appKey: 'T7Ogcjb7gfuhrvuW',
       appId: '2110945056'
@@ -53,7 +57,7 @@ export default {
               // 默认按比例压缩
               let [w, h] = [image.width, image.height]
               let scale = w / h
-              w = 400
+              w = 200
               h = w / scale
               // 默认图片质量为0.7，quality值越小，所绘制出的图像越模糊
               let quality = 0.7
@@ -70,7 +74,12 @@ export default {
               ctx.drawImage(image, 0, 0, w, h)
               let ext = image.src.substring(image.src.lastIndexOf('.') + 1).toLowerCase() // 图片格式
               let base64 = canvas.toDataURL('image/' + ext, quality)
-              _this.imgData = base64
+              _this.imgUrl = base64
+              let aaa = base64.split(',')
+              _this.imgData = aaa[1]
+              _this.imgDataTop = aaa[0]
+              // let index = base64.lastIndexOf(',')
+              // _this.imgData = base64.substring(index + 1, base64.length)
             }
           }
           if (dd < files.length - 1) {
@@ -108,9 +117,6 @@ export default {
       // 对字符串S进行MD5运算，将得到的MD5值所有字符转换成大写，得到接口请求签名
       const sign = md5(S).toUpperCase()
       console.log(sign)
-      // params.forEach(item => {
-      //   item.sign = sign
-      // })
       const paramter = {
         ...params,
         sign
@@ -118,7 +124,8 @@ export default {
       console.log(paramter)
       axios.post('/fcgi-bin/ptu/ptu_imgfilter', Qs.stringify(paramter))
         .then(res => {
-          console.log(res.data.data.trans_text)
+          console.log(res.data.data.image)
+          this.imgUrl = 'data:image/png;base64,' + res.data.data.image
         }).catch(err => {
           console.log(err)
         })
@@ -140,7 +147,13 @@ export default {
   }
   .content {
     margin-top: 200px;
+    .contentFile {
+      background-color: rgb(255, 255, 255);
+      .contentInput {
+        opacity: 0;
+        cursor: pointer;
+      }
+    }
   }
 }
-
 </style>
