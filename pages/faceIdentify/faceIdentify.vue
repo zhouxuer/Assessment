@@ -3,17 +3,33 @@
     <div class="bg">
       <bg/>
     </div>
-    <div class="content">
-      <a class="contentFile">上传文件
-        <input type="file" class="contentInput" @change="changeImg($event)">
-      </a>
-      <Button icon="ios-cloud-upload-outline">Upload files</Button>
-      <img :src="imgUrl" alt="">
-      <Button type="primary" @click="sss">一键美颜</Button>
+    <div>
+      <Row>
+        <i-col span="4">.</i-col>
+        <i-col span="16" class="content">
+          <div class="content-img">
+            <img :src="imgUrl">
+          </div>
+          <div class="content-upload">上传文件
+            <input type="file" class="content-input" @change="changeImg($event)">
+          </div>
+          <Button type="primary" @click="filter">一键美颜</Button>
+          <div style="width:70%;margin:20px auto;height:400px">
+            <slider ref="slider" :options="options" @slide='slide' @tap='onTap' @init='onInit'>
+              <!-- 直接使用slideritem slot -->
+              <slideritem v-for="(item,index) in someList" :key="index" :style="item.style">{{item.html}}</slideritem>
+              <!-- 设置loading,可自定义 -->
+              <div slot="loading">loading...</div>
+            </slider>
+          </div>
+        </i-col>
+        <i-col span="4"></i-col>
+      </Row>
     </div>
   </div>
 </template>
 <script>
+import { slider, slideritem } from 'vue-concise-slider'// import slider components
 import bg from '~/assets/bg.vue'
 import config from '~/assets/js/config.js'
 import axios from 'axios'
@@ -21,22 +37,63 @@ import md5 from 'md5'
 import Qs from 'Qs'
 export default {
   components: {
-    bg
+    bg,
+    slider,
+    slideritem
   },
   data () {
     return {
       imgUrl: '',
-      imgDataTop: '',
       imgData: '',
       appKey: 'T7Ogcjb7gfuhrvuW',
-      appId: '2110945056'
+      appId: '2110945056',
+      // Image list
+      someList: [],
+      // Sliding configuration [obj]
+      options: {
+        currentPage: 0,
+        thresholdDistance: 500,
+        thresholdTime: 100,
+        autoplay: 1000,
+        loop: true,
+        loopedSlides: 1,
+        slidesToScroll: 1,
+        timingFunction: 'ease',
+        speed: 300,
+        infinite: 2
+      }
     }
+  },
+  mounted () {
+    let that = this
+    setTimeout(function () {
+      that.someList = [
+        {
+          html: 'slide1',
+          style: {
+            'background': '#1bbc9b'
+          }
+        },
+        {
+          html: 'slide2',
+          style: {
+            'background': '#4bbfc3'
+          }
+        },
+        {
+          html: 'slide3',
+          style: {
+            'background': '#7baabe'
+          }
+        }
+      ]
+    }, 2000)
   },
   methods: {
     // 上传图片并转码
     changeImg: function (e) {
       const _this = this
-      const imgLimit = 1024 // 图片限制大小
+      const imgLimit = 500 // 图片限制大小
       const files = e.target.files
       const image = new Image() // 浏览器缓存图片
       if (files.length > 0) {
@@ -57,7 +114,7 @@ export default {
               // 默认按比例压缩
               let [w, h] = [image.width, image.height]
               let scale = w / h
-              w = 200
+              w = 300
               h = w / scale
               // 默认图片质量为0.7，quality值越小，所绘制出的图像越模糊
               let quality = 0.7
@@ -77,9 +134,6 @@ export default {
               _this.imgUrl = base64
               let aaa = base64.split(',')
               _this.imgData = aaa[1]
-              _this.imgDataTop = aaa[0]
-              // let index = base64.lastIndexOf(',')
-              // _this.imgData = base64.substring(index + 1, base64.length)
             }
           }
           if (dd < files.length - 1) {
@@ -91,7 +145,7 @@ export default {
       }
     },
     // 网络请求
-    sss () {
+    filter () {
       let params = {
         app_id: this.appId,
         time_stamp: config.timeStamp,
@@ -99,36 +153,34 @@ export default {
         filter: 1,
         image: this.imgData
       }
-      // 将<key, value>请求参数对按key进行字典升序排序，得到有序的参数对列表N
       const N = Object.keys(params).sort()
-      console.log(N)
-      // 将列表N中的参数对按URL键值对的格式拼接成字符串，得到字符串T（如：key1=value1&key2=value2），
       const TT = N.map(key => {
         const value = params[key]
         return `${key}=${encodeURIComponent(value)}`
       })
-      console.log(TT)
-      // URL键值拼接过程value部分需要URL编码，URL编码算法用大写字母，例如%E8，而不是小写%e8
       const T = TT.join('&')
-      console.log(T)
-      // 将应用密钥以app_key为键名，组成URL键值拼接到字符串T末尾，得到字符串S（如：key1=value1&key2=value2&app_key=密钥)
       const S = `${T}&app_key=${this.appKey}`
-      console.log(S)
-      // 对字符串S进行MD5运算，将得到的MD5值所有字符转换成大写，得到接口请求签名
       const sign = md5(S).toUpperCase()
-      console.log(sign)
       const paramter = {
         ...params,
         sign
       }
-      console.log(paramter)
       axios.post('/fcgi-bin/ptu/ptu_imgfilter', Qs.stringify(paramter))
         .then(res => {
-          console.log(res.data.data.image)
           this.imgUrl = 'data:image/png;base64,' + res.data.data.image
         }).catch(err => {
           console.log(err)
         })
+    },
+    // Listener event
+    slide (data) {
+      console.log(data)
+    },
+    onTap (data) {
+      console.log(data)
+    },
+    onInit (data) {
+      console.log(data)
     }
   }
 }
@@ -146,10 +198,40 @@ export default {
     left: 0;
   }
   .content {
-    margin-top: 200px;
-    .contentFile {
-      background-color: rgb(255, 255, 255);
-      .contentInput {
+    margin-top: 100px;
+    background-color: rgba(146, 146, 146, 0.212);
+    .content-img {
+      text-align: center;
+      position: relative;
+      z-index: 10;
+      margin: 4% auto 2%;
+      width: 60%;
+      padding-bottom: 40%;
+      background-color: #fff;
+      overflow: hidden;
+      img {
+        position: absolute;
+        z-index: 30;
+        display: inline-block;
+        height: auto;
+        max-width: 100%;
+        margin: auto;
+      }
+    }
+    .content-upload {
+      display: inline-block;
+      width: 150px;
+      height: 40px;
+      background-color: rgb(202, 0, 0);
+      position: relative;
+      overflow: hidden;
+      .content-input {
+        position: absolute;
+        z-index: 20;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
         opacity: 0;
         cursor: pointer;
       }
