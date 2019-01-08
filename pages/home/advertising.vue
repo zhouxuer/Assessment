@@ -38,19 +38,19 @@ export default {
       advertImgArr: [
         {
           id: 1,
-          url: require('~/static/img/advertising01.jpg')
+          url: require('~/static/img/home/advertising01.jpg')
         },
         {
           id: 2,
-          url: require('~/static/img/advertising02.jpg')
+          url: require('~/static/img/home/advertising02.jpg')
         },
         {
           id: 3,
-          url: require('~/static/img/advertising03.jpg')
+          url: require('~/static/img/home/advertising03.jpg')
         },
         {
           id: 4,
-          url: require('~/static/img/advertising04.jpg')
+          url: require('~/static/img/home/advertising04.jpg')
         }
       ]
     }
