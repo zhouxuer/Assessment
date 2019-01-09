@@ -8,8 +8,8 @@ const navData = [
   },
   {
     icon: '',
-    title: '人脸识别',
-    to: '/faceIdentify/faceIdentify',
+    title: '图片特效',
+    to: '/imgEffects/imgEffects',
     name: '2'
     // children: [
     //   {
@@ -17,7 +17,7 @@ const navData = [
     //     title: 'demoOne',
     //     to: '/Demo/DemoOne'
     //   },
-    //   {
+    //   {/imgIdentify/imgIdentify
     //     icon: '',
     //     title: 'demoTwo',
     //     to: '/Demo/DemoTwo'
@@ -32,8 +32,8 @@ const navData = [
   },
   {
     icon: '',
-    title: '图片特效',
-    to: '/ingEffects/ingEffects',
+    title: '111',
+    to: '/faceIdentify/faceIdentify',
     name: '4'
   },
   {
