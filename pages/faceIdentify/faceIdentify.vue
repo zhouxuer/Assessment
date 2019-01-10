@@ -1,47 +1,66 @@
 <template>
-  <div class="aaa">
-    <Input v-model="value" :type="file"/>
-    <Button type="primary" @click="sss">文本</Button>
-    <Input v-model="value2" type="textarea" :rows="30" class="input" />
-    <img :src="url"/>
-  </div>
+  <!-- <div class="ssss"> -->
+    <!-- <md-card> -->
+    <!-- <md-card-media> -->
+      <!-- swiper -->
+      <swiper :options="swiperOption">
+        <swiper-slide>Slide 1</swiper-slide>
+        <swiper-slide>Slide 2</swiper-slide>
+        <swiper-slide>Slide 3</swiper-slide>
+        <swiper-slide>Slide 4</swiper-slide>
+        <swiper-slide>Slide 5</swiper-slide>
+        <swiper-slide>Slide 6</swiper-slide>
+        <swiper-slide>Slide 7</swiper-slide>
+        <swiper-slide>Slide 8</swiper-slide>
+        <swiper-slide>Slide 9</swiper-slide>
+        <swiper-slide>Slide 10</swiper-slide>
+        <div class="swiper-pagination" slot="pagination"></div>
+      </swiper>
+    <!-- </md-card-media> -->
+  <!-- </md-card> -->
+    <!-- <md-card-media>
+      <swiper :options="swiperOption">
+        <swiper-slide><img src="">111</swiper-slide>
+        <swiper-slide><img src="">222</swiper-slide>
+        <swiper-slide><img src="">333</swiper-slide>
+        <swiper-slide><img src="">444</swiper-slide>
+        <swiper-slide><img src="">555</swiper-slide>
+        <swiper-slide><img src="">666</swiper-slide>
+      </swiper>
+    </md-card-media> -->
+    <!--以下看需要添加-->
+    <!-- <div class="swiper-scrollbar"></div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-pagination"></div> -->
+  <!-- </div> -->
 </template>
 <script>
+import 'swiper/dist/css/swiper.css'
+import { swiper, swiperSlide } from 'vue-awesome-swiper'
 export default {
+  components: {
+    swiper,
+    swiperSlide
+  },
   data () {
     return {
-      value: '',
-      value2: '',
-      url: ''
-    }
-  },
-  methods: {
-    sss () {
-      let file = this.files[0]
-      if (!/image\/\w+/.test(file.type)) {
-        alert('请确保文件为图像类型')
-        return false
-      }
-      let fileReader = new FileReader()
-      fileReader.readAsDataURL(file.files[0])
-      fileReader.onload = function () {
-        let imgBase64Data = this.result
-        this.value2 = imgBase64Data
-        this.url = imgBase64Data
+      swiperOption: { // swiper3
+        autoplay: 3000,
+        speed: 1000,
+        slidesPerView: 3,
+        spaceBetween: 30,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true
+        }
       }
     }
   }
 }
 </script>
-<style scoped lang="less">
-.aaa {
-  width: 100%;
-  margin-top: 200px;
-  background-color: #f5ff;
-  .bbb {
-    width: 50px;
-    height: 50px;
-    background-color: #fff;
-  }
+<style>
+.ssss {
+  margin-top: 300px;
 }
 </style>

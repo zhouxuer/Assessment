@@ -13,20 +13,21 @@
 
           <div class="content-btn">
             <button class="btn-upload">
-              <span>Upload Photos</span>
+              <span>上传图片</span>
               <input
                 type="file"
                 class="upload"
                 @change="changeImg($event)"
               >
             </button>
-            <button class="btn-upload"><span>原图</span></button>
-            <button class="btn-upload"><span>年龄检测</span></button>
+            <button class="btn-upload" @click="originalImage"><span>原图</span></button>
+            <button class="btn-upload" @click="ageDetection"><span>年龄检测</span></button>
           </div>
 
           <div class="content-effects">
-            <Tabs value="name1" type="card">
+            <Tabs value="name1">
               <TabPane
+                class="effects-switch"
                 v-for="(item) in switchFilter"
                 :key="item.id"
                 :label="item.title"
@@ -57,15 +58,6 @@
         <i-col span="4"></i-col>
       </Row>
     </div>
-    <div id="container-example">
-      <div class='strip colour-4'>
-        <a href="q" class="">Lorem</a>
-        <a href="w" class="">Ipsum</a>
-        <a href="e" class="">Dolor</a>
-        <a href="r" class="">Sit</a>
-        <a href="t" class="">Amet</a>
-      </div>
-    </div>
   </div>
 </template>
 <script>
@@ -81,6 +73,7 @@ export default {
   data () {
     return {
       imgUrl: '',
+      imgUrlBase64: '',
       imgBase64: '',
       appKey: 'T7Ogcjb7gfuhrvuW',
       appId: '2110945056',
@@ -794,6 +787,7 @@ export default {
       ]
     }
   },
+  created () {},
   methods: {
     // 上传图片并转码
     changeImg (e) {
@@ -818,6 +812,12 @@ export default {
             image.onload = function () {
               // 默认按比例压缩
               let [w, h] = [image.width, image.height]
+              // let scale = ''
+              // if (w > h) {
+              //   scale = w / h
+              // } else {
+              //   scale = h / w
+              // }
               let scale = w / h
               w = 300
               h = w / scale
@@ -837,6 +837,7 @@ export default {
               let ext = image.src.substring(image.src.lastIndexOf('.') + 1).toLowerCase() // 图片格式
               let base64 = canvas.toDataURL('image/' + ext, quality)
               _this.imgUrl = base64
+              _this.imgUrlBase64 = base64
               let imgBase64 = base64.split(',')
               _this.imgBase64 = imgBase64[1]
             }
@@ -866,6 +867,36 @@ export default {
         default:
           this.photo(img)
       }
+    },
+    originalImage () {
+      this.imgUrl = this.imgUrlBase64
+    },
+    ageDetection () {
+      let params = {
+        app_id: this.appId,
+        time_stamp: config.timeStamp,
+        nonce_str: config.nonceStr,
+        image: this.imgBase64
+      }
+      const N = Object.keys(params).sort()
+      const TT = N.map(key => {
+        const value = params[key]
+        return `${key}=${encodeURIComponent(value)}`
+      })
+      const T = TT.join('&')
+      const S = `${T}&app_key=${this.appKey}`
+      const sign = md5(S).toUpperCase()
+      const paramter = {
+        ...params,
+        sign
+      }
+      axios.post('/fcgi-bin/ptu/ptu_faceage', Qs.stringify(paramter))
+        .then(res => {
+          // console.log(res.data.data)
+          this.imgUrl = 'data:image/png;base64,' + res.data.data.image
+        }).catch(err => {
+          console.log(err)
+        })
     },
     filterPortrait (img) {
       // console.log(img + '===')
@@ -1104,6 +1135,12 @@ export default {
     .content-effects {
       display: flex;
       flex-direction: row;
+      .effects-switch {
+        width: 100%;
+      }
+      .ivu-tabs-bar {
+        border-bottom: 5px solid #000000;
+      }
       .effects {
         display: flex;
         flex-direction: row;
@@ -1113,64 +1150,35 @@ export default {
           text-align: center;
           margin: 0 5px;
           list-style: none;
-          // width: 200px;
-          // height: 200px;
           .effects-img {
-            // width: 200px;
-            // min-width: 200px;
-            // max-height: 200px;
-            // max-height: 200px;
             border-radius: 50%;
+            border: 2px solid #8d78b1;
           }
           .effects-btn {
             font-size: 16px;
-            text-align: center;
             position: absolute;
-            padding-top: 50%;
+            padding-top: 41%;
             top: 0;
             bottom: 4%;
             right: 0;
             left: 0;
-            background-color: rgba(162, 0, 255, 0.541);
             border-radius: 50%;
             font-weight: bold;
             color: rgb(255, 255, 255);
             opacity: 0;
+            border: 2px solid rgb(255, 255, 255);
+            background-image: linear-gradient(-135deg, #8d78b1, #8d78b1 50%, #fff 50%, #fff);
+            background-size: 100% 500%;
+            background-position: bottom;
+            -webkit-transition: all 0.4s ease;
             &:hover {
               opacity: 1;
+              background-position: top;
             }
           }
         }
       }
     }
-  }
-  #container-example a {
-    font-size: 12pt;
-    font-family: sans-serif;
-    color: #fff;
-    text-decoration: none;
-    letter-spacing: 2px;
-    position: relative;
-    text-align: center;
-    padding: 15px 50px;
-    width: 150px;
-  }
-  .effects-li {
-    background: #8d78b1;
-  }
-  .effects-li a {
-    border: 2px solid #fff;
-    border-radius: 50px;
-    background-image: -webkit-linear-gradient(225deg, #fff, #fff 50%, #8d78b1 50%, #8d78b1);
-    background-image: linear-gradient(-135deg, #fff, #fff 50%, #8d78b1 50%, #8d78b1);
-    background-size: 100% 500%;
-    background-position: bottom;
-    -webkit-transition: all 0.4s ease;
-    transition: all 0.4s ease;
-  }
-  .effects-li a:hover {
-    background-position: top;
-    color: #8d78b1;
   }
 }
 </style>

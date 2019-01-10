@@ -29,9 +29,19 @@ module.exports = {
   // eslint-disable-next-line no-dupe-keys
   css: ['~assets/css/main.css'],
 
+  // eslint-disable-next-line no-dupe-keys
+  // css: [{
+  //   src: 'swiper/dist/css/swiper.css'
+  // }],
+  // plugins: [{
+  //   src: '~/plugins/vue-awesome-swiper.js',
+  //   ssr: false
+  // }],
+
   /*
   ** Plugins to load before mounting the App
   */
+  // eslint-disable-next-line no-dupe-keys
   plugins: [{ src: '~plugins/iview', ssr: true }],
   proxy: {
     '/app/*': {
