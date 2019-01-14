@@ -1,12 +1,12 @@
 <template>
-  <div class="sss">
+  <div class="page">
     <div class="bg">
       <bg/>
     </div>
     <div>
       <Row>
-        <i-col span="4">.</i-col>
-        <i-col span="16" class="content">
+        <i-col :xs="0" :sm="2" :md="3" :lg="4">.</i-col>
+        <i-col :xs="24" :sm="20" :md="18" :lg="16" class="content">
           <div class="content-img">
             <img :src="imgUrl">
           </div>
@@ -55,7 +55,7 @@
             </Tabs>
           </div>
         </i-col>
-        <i-col span="4"></i-col>
+        <i-col :xs="0" :sm="2" :md="3" :lg="4"></i-col>
       </Row>
     </div>
   </div>
@@ -1041,9 +1041,10 @@ export default {
 }
 </script>
 <style scoped lang="less">
-.sss {
+.page {
   width: 100%;
   text-align: center;
+  position: relative;
   .bg {
     position: fixed;
     z-index: -1000;
@@ -1053,7 +1054,6 @@ export default {
     left: 0;
   }
   .content {
-    margin: 0;
     background-image: linear-gradient(to top, #d9afd9 0%, #97d9e1 100%);
     background-repeat: no-repeat;
     background-size: cover;
@@ -1088,7 +1088,6 @@ export default {
         display: block;
         text-align: center;
         cursor: pointer;
-        // text-transform: uppercase;
         outline: none;
         overflow: hidden;
         position: relative;
@@ -1097,7 +1096,6 @@ export default {
         font-size: 15px;
         background-color: #222;
         width: 25%;
-        // margin: 0 auto;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.20);
         .upload {
           position: absolute;
