@@ -56,6 +56,77 @@
               </div>
             </i-col>
           </Row>
+          <Row class="show">
+            <i-col :xs="24" :sm="11" :md="11" :lg="11.5">
+              <div class="noun">
+                <h2 class="noun-title">专有名词</h2>
+              </div>
+            </i-col>
+            <i-col :xs="0" :sm="2" :md="2" :lg="1">.</i-col>
+            <i-col :xs="24" :sm="11" :md="11" :lg="11.5">
+              <div class="synonym">
+                <h2 class="synonym-title">同义词</h2>
+              </div>
+            </i-col>
+          </Row>
+          <Row class="show">
+            <i-col :xs="24" :sm="11" :md="11" :lg="11.5">
+              <div class="intentions">
+                <h2 class="intentions-title">意图成分</h2>
+                <div>
+                  <h2 class="intentions-title">意图</h2>
+                  <div
+                    v-show="intentionsVal"
+                    v-for="item in intentionsArr"
+                    :key="item.id"
+                  ><span v-if="item.id == intentionsVal">{{item.value}}</span></div>
+                </div>
+                <div>
+                  <h2 class="intentions-title">成分</h2>
+                  <div
+                    v-show="compositionVal.length"
+                    v-for="item in compositionVal"
+                    :key="item.com_word"
+                  >
+                  <span v-for="aaa in compositionArr" :key="aaa.id" v-show="aaa.id == item.com_type">
+                    <p>{{aaa.value}} {{item.com_word}}</p>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </i-col>
+            <i-col :xs="0" :sm="2" :md="2" :lg="1">.</i-col>
+            <i-col :xs="24" :sm="11" :md="11" :lg="11.5">
+              <div class="emotional">
+                <h2 class="emotional-title">情感分析</h2>
+                <div v-show="emotionalVal" v-for="item in emotionalArr" :key="item.id">
+                  <Progress v-show="item.id == emotionalVal" :percent="item.value" :stroke-width="20">
+                    <Icon type="checkmark-circled"></Icon>
+                    <span>成功</span>
+                  </Progress>
+                </div>
+              </div>
+            </i-col>
+          </Row>
+          <div class="show">
+            <div class="chat">
+              <div>
+                <Poptip word-wrap content="Steven Paul Jobs was an American entrepreneur and business magnate. He was the chairman, chief executive officer, and a co-founder of Apple Inc.">
+                  <Button>Long Content</Button>
+                </Poptip>
+              </div>
+              <div class="chat-input">
+                <Input
+                  v-model="value3"
+                  type="textarea"
+                  :rows="1"
+                  placeholder="Enter something..."
+                  class="chat-text"
+                />
+                <Button class="translate-btn" type="primary" @click="chat">发送聊天</Button>
+              </div>
+            </div>
+          </div>
         </i-col>
         <i-col :xs="0" :sm="2" :md="3" :lg="4"></i-col>
       </Row>
@@ -142,9 +213,203 @@ export default {
         }
       ],
       labelValue: '自动识别（中文 → 英文）',
+      intentionsArr: [
+        {
+          id: 0,
+          value: '未知'
+        },
+        {
+          id: 1,
+          value: '天气'
+        },
+        {
+          id: 2,
+          value: '音乐'
+        },
+        {
+          id: 3,
+          value: '股票'
+        },
+        {
+          id: 4,
+          value: '新闻'
+        }
+      ],
+      intentionsVal: null,
+      compositionArr: [
+        {
+          id: 0,
+          value: '未知'
+        },
+        {
+          id: 1,
+          value: '歌词'
+        },
+        {
+          id: 2,
+          value: '下载地址'
+        },
+        {
+          id: 3,
+          value: '乐器'
+        },
+        {
+          id: 4,
+          value: '歌曲'
+        },
+        {
+          id: 5,
+          value: '人名'
+        },
+        {
+          id: 6,
+          value: '时间'
+        },
+        {
+          id: 7,
+          value: '地点'
+        },
+        {
+          id: 8,
+          value: '风格'
+        },
+        {
+          id: 9,
+          value: '数字'
+        },
+        {
+          id: 10,
+          value: '视频'
+        },
+        {
+          id: 11,
+          value: '民族'
+        },
+        {
+          id: 12,
+          value: '专辑'
+        },
+        {
+          id: 13,
+          value: '序数词'
+        },
+        {
+          id: 14,
+          value: '综艺'
+        },
+        {
+          id: 15,
+          value: '乐队'
+        },
+        {
+          id: 16,
+          value: '景点'
+        },
+        {
+          id: 17,
+          value: '电影'
+        },
+        {
+          id: 18,
+          value: '电视剧'
+        },
+        {
+          id: 19,
+          value: '百科'
+        },
+        {
+          id: 34,
+          value: '股票名称'
+        },
+        {
+          id: 35,
+          value: '股票代码'
+        },
+        {
+          id: 36,
+          value: '指数'
+        },
+        {
+          id: 37,
+          value: '价格'
+        },
+        {
+          id: 38,
+          value: '行情'
+        },
+        {
+          id: 40,
+          value: '山'
+        },
+        {
+          id: 41,
+          value: '湖'
+        },
+        {
+          id: 42,
+          value: '是否'
+        },
+        {
+          id: 43,
+          value: '餐馆'
+        },
+        {
+          id: 44,
+          value: '菜名'
+        },
+        {
+          id: 45,
+          value: '儿歌'
+        },
+        {
+          id: 46,
+          value: '故事'
+        },
+        {
+          id: 47,
+          value: '相声'
+        },
+        {
+          id: 48,
+          value: '评书'
+        },
+        {
+          id: 49,
+          value: '有声内容'
+        },
+        {
+          id: 128,
+          value: '类别词'
+        },
+        {
+          id: 129,
+          value: '关系词'
+        },
+        {
+          id: 130,
+          value: '省略词'
+        }
+      ],
+      compositionVal: [],
+      emotionalArr: [
+        {
+          id: '-1',
+          value: 20
+        },
+        {
+          id: '0',
+          value: 50
+        },
+        {
+          id: '1',
+          value: 80
+        }
+      ],
+      emotionalVal: null,
       translateType: 0,
       value1: '',
       value2: '',
+      value3: '',
       appKey: '5YsLCOwtO5hcvx8e',
       appId: '2110940915'
     }
@@ -164,6 +429,8 @@ export default {
     generate () {
       this.translate()
       this.wordsPart()
+      this.intentions()
+      this.emotional()
     },
     translate () {
       let params = {
@@ -233,6 +500,89 @@ export default {
         }).catch(err => {
           console.log(err)
         })
+    },
+    intentions () {
+      let params = {
+        app_id: this.appId,
+        time_stamp: config.timeStamp,
+        nonce_str: config.nonceStr,
+        text: this.value1
+      }
+      const N = Object.keys(params).sort()
+      const TT = N.map(key => {
+        const value = params[key]
+        return `${key}=${encodeURIComponent(value)}`
+      })
+      const T = TT.join('&')
+      const S = `${T}&app_key=${this.appKey}`
+      const sign = md5(S).toUpperCase()
+      const paramter = {
+        ...params,
+        sign
+      }
+      axios.post('/fcgi-bin/nlp/nlp_wordcom', Qs.stringify(paramter))
+        .then(res => {
+          console.log(res.data.data.com_tokens)
+          this.intentionsVal = res.data.data.intent
+          this.compositionVal = res.data.data.com_tokens
+        }).catch(err => {
+          console.log(err)
+        })
+    },
+    emotional () {
+      let params = {
+        app_id: this.appId,
+        time_stamp: config.timeStamp,
+        nonce_str: config.nonceStr,
+        text: this.value1
+      }
+      const N = Object.keys(params).sort()
+      const TT = N.map(key => {
+        const value = params[key]
+        return `${key}=${encodeURIComponent(value)}`
+      })
+      const T = TT.join('&')
+      const S = `${T}&app_key=${this.appKey}`
+      const sign = md5(S).toUpperCase()
+      const paramter = {
+        ...params,
+        sign
+      }
+      axios.post('/fcgi-bin/nlp/nlp_textpolar', Qs.stringify(paramter))
+        .then(res => {
+          console.log(res.data.data.polar)
+          this.emotionalVal = res.data.data.polar
+        }).catch(err => {
+          console.log(err)
+        })
+    },
+    chat () {
+      let params = {
+        app_id: this.appId,
+        time_stamp: config.timeStamp,
+        nonce_str: config.nonceStr,
+        session: config.nonceStr,
+        question: this.value3
+      }
+      const N = Object.keys(params).sort()
+      const TT = N.map(key => {
+        const value = params[key]
+        return `${key}=${encodeURIComponent(value)}`
+      })
+      const T = TT.join('&')
+      const S = `${T}&app_key=${this.appKey}`
+      const sign = md5(S).toUpperCase()
+      const paramter = {
+        ...params,
+        sign
+      }
+      axios.post('/fcgi-bin/nlp/nlp_textchat', Qs.stringify(paramter))
+        .then(res => {
+          console.log(res.data.data.answer)
+          // this.emotionalVal = res.data.data.polar
+        }).catch(err => {
+          console.log(err)
+        })
     }
   }
 }
@@ -249,12 +599,13 @@ export default {
     left: 0;
   }
   .input {
-    margin-bottom: 20px;
+    // margin-bottom: 20px;
     .input-text {
       width: 85%;
     }
   }
   .show {
+    margin-top: 30px;
     .translate {
       width: 100%;
       height: 300px;
@@ -297,6 +648,41 @@ export default {
         width: 50%;
         height: 300px;
         background-color: rgb(198, 255, 233);
+      }
+    }
+    .noun {
+      width: 100%;
+      height: 300px;
+      background-color: rgb(253, 244, 193);
+    }
+    .synonym {
+      width: 100%;
+      height: 300px;
+      background-color: rgb(253, 244, 193);
+    }
+    .intentions {
+      width: 100%;
+      height: 300px;
+      background-color: rgb(253, 244, 193);
+    }
+    .emotional {
+      width: 100%;
+      height: 300px;
+      background-color: rgb(253, 244, 193);
+    }
+    .chat {
+      width: 100%;
+      height: 300px;
+      background-color: rgb(253, 244, 193);
+      text-align: center;
+      position: relative;
+      .chat-input {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        .chat-text {
+          width: 80%;
+        }
       }
     }
   }
