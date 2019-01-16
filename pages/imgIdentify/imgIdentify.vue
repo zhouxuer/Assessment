@@ -108,12 +108,16 @@
               </div>
             </i-col>
           </Row>
-          <div class="show">
+          <div class="show chat">
             <div class="chat">
-              <div>
-                <Poptip word-wrap content="Steven Paul Jobs was an American entrepreneur and business magnate. He was the chairman, chief executive officer, and a co-founder of Apple Inc.">
-                  <Button>Long Content</Button>
-                </Poptip>
+              <div
+                class="chat-content"
+                v-show="chatContent"
+                v-for="(item,index) in chatContent"
+                :key="index"
+              >
+                <p class="chat-content-send">{{item.valueSend}}</p>
+                <p class="chat-content-receive">{{item.valueReceive}}</p>
               </div>
               <div class="chat-input">
                 <Input
@@ -407,6 +411,7 @@ export default {
       ],
       emotionalVal: null,
       translateType: 0,
+      chatContent: [],
       value1: '',
       value2: '',
       value3: '',
@@ -557,6 +562,11 @@ export default {
         })
     },
     chat () {
+      if (this.value3 !== '') {
+        this.chatContent.push({
+          valueSend: this.value3
+        })
+      }
       let params = {
         app_id: this.appId,
         time_stamp: config.timeStamp,
@@ -579,6 +589,13 @@ export default {
       axios.post('/fcgi-bin/nlp/nlp_textchat', Qs.stringify(paramter))
         .then(res => {
           console.log(res.data.data.answer)
+          let answer = res.data.data.answer
+          if (answer !== '') {
+            this.chatContent.push({ // 数组追加对象
+              valueReceive: answer
+            })
+          }
+          this.value3 = ''
           // this.emotionalVal = res.data.data.polar
         }).catch(err => {
           console.log(err)
@@ -671,11 +688,28 @@ export default {
       background-color: rgb(253, 244, 193);
     }
     .chat {
+      margin-bottom: 50px;
       width: 100%;
       height: 300px;
       background-color: rgb(253, 244, 193);
       text-align: center;
       position: relative;
+      .chat-content {
+        width: 70%;
+        // height: 80%;
+        margin: auto;
+        background-color: #fff;
+        .chat-content-send {
+          // position: absolute;
+          // left: 0;
+          background-color: rgb(255, 172, 172);
+        }
+        .chat-content-receive {
+          // position: absolute;
+          // right: 0;
+          background-color: rgb(182, 253, 255);
+        }
+      }
       .chat-input {
         position: absolute;
         bottom: 0;
