@@ -4,6 +4,7 @@
       <bg/>
     </div>
     <div>
+      <a href="../imgIdentify/_shishi.vue">1111111</a>
       <Row>
         <i-col :xs="0" :sm="2" :md="3" :lg="4">.</i-col>
         <i-col :xs="24" :sm="20" :md="18" :lg="16" class="content">
@@ -46,32 +47,22 @@
             </i-col>
             <i-col :xs="0" :sm="2" :md="2" :lg="1">.</i-col>
             <i-col :xs="24" :sm="11" :md="11" :lg="11.5">
-              <div class="words">
-                <div class="words-part">
-                  <h2 class="words-title">分词</h2>
+              <div class="emotional">
+                <h2 class="emotional-title">情感分析</h2>
+                <Progress :percent="100" />
+                <div
+                  v-for="item in emotionalArr"
+                  :key="item.id"
+                >
+                  <Progress
+                    :percent="45"
+                    :stroke-width="20"
+                    status="active"
+                  >
+                    <Icon class="aaa" type="checkmark-circled"></Icon>
+                    <span>开心值</span>
+                  </Progress>
                 </div>
-                <div class="words-sense">
-                  <h2 class="words-title">词性</h2>
-                </div>
-              </div>
-            </i-col>
-          </Row>
-          <Row class="show">
-            <i-col :xs="24" :sm="11" :md="11" :lg="11.5">
-              <div class="noun">
-                <h2 class="noun-title">专有名词</h2>
-              </div>
-            </i-col>
-            <i-col :xs="0" :sm="2" :md="2" :lg="1">.</i-col>
-            <i-col :xs="24" :sm="11" :md="11" :lg="11.5">
-              <div class="synonym">
-                <h2 class="synonym-title">同义词</h2>
-              </div>
-            </i-col>
-          </Row>
-          <Row class="show">
-            <i-col :xs="24" :sm="11" :md="11" :lg="11.5">
-              <div class="intentions">
                 <h2 class="intentions-title">意图成分</h2>
                 <div>
                   <h2 class="intentions-title">意图</h2>
@@ -92,18 +83,6 @@
                     <p>{{aaa.value}} {{item.com_word}}</p>
                     </span>
                   </div>
-                </div>
-              </div>
-            </i-col>
-            <i-col :xs="0" :sm="2" :md="2" :lg="1">.</i-col>
-            <i-col :xs="24" :sm="11" :md="11" :lg="11.5">
-              <div class="emotional">
-                <h2 class="emotional-title">情感分析</h2>
-                <div v-show="emotionalVal" v-for="item in emotionalArr" :key="item.id">
-                  <Progress v-show="item.id == emotionalVal" :percent="item.value" :stroke-width="20">
-                    <Icon type="checkmark-circled"></Icon>
-                    <span>成功</span>
-                  </Progress>
                 </div>
               </div>
             </i-col>
@@ -397,15 +376,18 @@ export default {
       compositionVal: [],
       emotionalArr: [
         {
-          id: '-1',
+          id: 1,
+          polar: '-1',
           value: 20
         },
         {
-          id: '0',
+          id: 2,
+          polar: '0',
           value: 50
         },
         {
-          id: '1',
+          id: 3,
+          polar: '1',
           value: 80
         }
       ],
@@ -416,7 +398,8 @@ export default {
       value2: '',
       value3: '',
       appKey: '5YsLCOwtO5hcvx8e',
-      appId: '2110940915'
+      appId: '2110940915',
+      aaa: ''
     }
   },
   mounted () {
@@ -432,11 +415,12 @@ export default {
       this.visible = false
     },
     generate () {
+      this.emotionalVal = null
       this.translate()
-      this.wordsPart()
       this.intentions()
       this.emotional()
     },
+    // 翻译
     translate () {
       let params = {
         app_id: this.appId,
@@ -479,33 +463,7 @@ export default {
           console.log(err)
         })
     },
-    wordsPart () {
-      let params = {
-        app_id: this.appId,
-        time_stamp: config.timeStamp,
-        nonce_str: config.nonceStr,
-        text: this.value1
-      }
-      const N = Object.keys(params).sort()
-      const TT = N.map(key => {
-        const value = params[key]
-        return `${key}=${encodeURIComponent(value)}`
-      })
-      const T = TT.join('&')
-      const S = `${T}&app_key=${this.appKey}`
-      const sign = md5(S).toUpperCase()
-      const paramter = {
-        ...params,
-        sign
-      }
-      axios.post('/fcgi-bin/nlp/nlp_wordseg', Qs.stringify(paramter))
-        .then(res => {
-          console.log(res.data.data.trans_text)
-          // this.value2 = res.data.data.trans_text
-        }).catch(err => {
-          console.log(err)
-        })
-    },
+    // 意图
     intentions () {
       let params = {
         app_id: this.appId,
@@ -527,13 +485,13 @@ export default {
       }
       axios.post('/fcgi-bin/nlp/nlp_wordcom', Qs.stringify(paramter))
         .then(res => {
-          console.log(res.data.data.com_tokens)
           this.intentionsVal = res.data.data.intent
           this.compositionVal = res.data.data.com_tokens
         }).catch(err => {
           console.log(err)
         })
     },
+    // 情感
     emotional () {
       let params = {
         app_id: this.appId,
@@ -555,12 +513,13 @@ export default {
       }
       axios.post('/fcgi-bin/nlp/nlp_textpolar', Qs.stringify(paramter))
         .then(res => {
-          console.log(res.data.data.polar)
           this.emotionalVal = res.data.data.polar
+          // console.log(this.emotionalVal)
         }).catch(err => {
           console.log(err)
         })
     },
+    // 聊天
     chat () {
       if (this.value3 !== '') {
         this.chatContent.push({
@@ -588,15 +547,13 @@ export default {
       }
       axios.post('/fcgi-bin/nlp/nlp_textchat', Qs.stringify(paramter))
         .then(res => {
-          console.log(res.data.data.answer)
           let answer = res.data.data.answer
           if (answer !== '') {
-            this.chatContent.push({ // 数组追加对象
+            this.chatContent.push({
               valueReceive: answer
             })
           }
           this.value3 = ''
-          // this.emotionalVal = res.data.data.polar
         }).catch(err => {
           console.log(err)
         })
@@ -696,17 +653,12 @@ export default {
       position: relative;
       .chat-content {
         width: 70%;
-        // height: 80%;
         margin: auto;
         background-color: #fff;
         .chat-content-send {
-          // position: absolute;
-          // left: 0;
           background-color: rgb(255, 172, 172);
         }
         .chat-content-receive {
-          // position: absolute;
-          // right: 0;
           background-color: rgb(182, 253, 255);
         }
       }

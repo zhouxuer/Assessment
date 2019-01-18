@@ -57,8 +57,8 @@ export default {
   top: 0;
   z-index: 1000;
   .ivu-menu-dark {
-    height: 70px;
-    line-height: 70px;
+    height: 85px;
+    line-height: 85px;
     border-bottom: 0.5px solid rgba(230, 230, 230, 0.801);
     background-color: rgba(255, 255, 255, 0);
     &:hover {
@@ -66,6 +66,7 @@ export default {
     }
   }
   .layout-logo {
+    margin-left: 10%;
     width: 100px;
     height: 40px;
     background: #5b6270;
@@ -77,12 +78,13 @@ export default {
   }
   .layout-nav {
     width: 800px;
-    margin: 0 auto;
+    margin-left: 50%;
     .ivu-menu-submenu {
-      padding: 0 50px;
+      padding: 0 40px;
     }
     .ivu-menu-item {
-      padding: 0 50px;
+      font-size: 17px;
+      padding: 0 40px;
     }
   }
 }
@@ -94,6 +96,5 @@ export default {
 .ivu-menu-dark.ivu-menu-horizontal .ivu-menu-item-active,
 .ivu-menu-dark.ivu-menu-horizontal .ivu-menu-submenu-active {
   color: rgb(255, 255, 255);
-  font-weight: bold;
 }
 </style>

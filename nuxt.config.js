@@ -34,9 +34,20 @@ module.exports = {
   //   src: 'swiper/dist/css/swiper.css'
   // }],
   // plugins: [{
-  //   src: '~/plugins/vue-awesome-swiper.js',
+  //   src: '~plugins/vue-awesome-swiper',
   //   ssr: false
   // }],
+  plugins: ['~/plugins/vue-awesome-swiper'],
+
+  // eslint-disable-next-line no-dupe-keys
+  css: [{
+    src: 'swiper/dist/css/swiper.css'
+  }],
+  // eslint-disable-next-line no-dupe-keys
+  plugins: [{
+    src: '~/plugins/vue-swiper.js',
+    ssr: false
+  }],
 
   /*
   ** Plugins to load before mounting the App

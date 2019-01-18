@@ -1,40 +1,53 @@
 <template>
   <div class="sss">
-    <div class="bg">
+    <!-- <div class="bg">
       <bg/>
-    </div>
+    </div> -->
     <advertising/>
     <div class="faceIdentify">
-      <h4>图片特效</h4>
+      <h1 class="faceIdentify-title">图片特效
+        <p><i>— Photo effects —</i></p>
+        <img src="~/static/img/home/home-04-i9.png">
+      </h1>
       <Row
         class="code-row-bg"
         type="flex"
         justify="center"
       >
-        <i-col
-          span="8"
-          class="ccc"
-        >
+        <i-col span="4"></i-col>
+        <i-col span="5">
           <img 
-            class="filter-img"
+            class="filter-imga"
             src="~/static/img/home/filter01.jpg"
           >
-          <span class="filter-span">
-            <a>人像滤镜</a>
-          </span>
-        </i-col>
-        <i-col
-          span="8"
-          class="ccc"
-        >
           <img 
-            class="filter-img"
+            class="filter-imgb"
             src="~/static/img/home/filter02.jpg"
           >
-          <span class="filter-span">
-            <a>风景滤镜</a>
-          </span>
         </i-col>
+        <i-col span="6">
+          <img 
+            class="filter-imgc"
+            src="~/static/img/home/filter03.jpg"
+          >
+          <!-- <span class="filter-span">
+            <a>人像滤镜</a>
+          </span> -->
+        </i-col>
+        <i-col span="5">
+          <img 
+            class="filter-imgd"
+            src="~/static/img/home/filter02.jpg"
+          >
+          <img 
+            class="filter-imge"
+            src="~/static/img/home/filter01.jpg"
+          >
+        </i-col>
+        <i-col span="4"></i-col>
+        <!-- <i-col span="4">1</i-col>
+        <i-col span="4">1</i-col>
+        <i-col span="4">1</i-col> -->
       </Row>
     </div>
     <div class="imgIdentify">
@@ -100,14 +113,39 @@ export default {
     right: 0;
     left: 0;
   }
-  .ccc {
-    overflow: hidden;
-    .filter-img {
-      position: relative;
-      margin: 10%;
-      // padding: 10%;
-      max-width: 80%;
-      // box-shadow: 0px 0px 40px 0px rgba(255, 255, 255, 0.657);
+  .faceIdentify-title {
+    margin: 40px 0;
+    font-size: 35px;
+    color: rgb(44, 44, 44);
+    p {
+      margin-top: 5px;
+      font-family:"Times New Roman",Georgia,Serif;
+      font-size: 18px;
+      color: rgb(255, 181, 249);
+      font-weight: 200;
+    }
+    img {
+      max-width: 18%;
+    }
+  }
+  // .ccc {
+    // overflow: hidden;
+    .filter-imga {
+      width: 100%;
+      margin-bottom: 5%;
+    }
+    .filter-imgb {
+      width: 100%;
+    }
+    .filter-imgc {
+      width: 85%;
+    }
+    .filter-imgd {
+      width: 100%;
+    }
+    .filter-imge {
+      width: 100%;
+      margin-top: 5%;
     }
     .filter-span {
       opacity: 0;
@@ -195,6 +233,6 @@ export default {
         }
       }
     }
-  }
+  // }
 }
 </style>
