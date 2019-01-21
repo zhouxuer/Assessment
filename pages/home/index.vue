@@ -16,42 +16,52 @@
       >
         <i-col span="4"></i-col>
         <i-col span="5">
-          <img 
-            class="filter-imga"
-            src="~/static/img/home/filter01.jpg"
-          >
-          <img 
-            class="filter-imgb"
-            src="~/static/img/home/filter02.jpg"
-          >
+          <div class="filtera filter-img">
+            <div class="filter__previewbox">
+              <img src="~/static/img/home/filter01.jpg" class="filter__preview" alt="Preview">
+              <span class="filter__label">Effect #11</span>
+            </div>
+          </div>
+          <div class="filterb filter-img">
+            <div class="filter__previewbox">
+              <img src="~/static/img/home/filter02.jpg" class="filter__preview" alt="Preview">
+              <span class="filter__label">Effect #11</span>
+            </div>
+          </div>
         </i-col>
         <i-col span="6">
-          <img 
-            class="filter-imgc"
-            src="~/static/img/home/filter03.jpg"
-          >
-          <!-- <span class="filter-span">
-            <a>人像滤镜</a>
-          </span> -->
+          <div class="filterc filter-img">
+            <div class="filter__previewbox">
+              <img src="~/static/img/home/filter03.jpg" class="filter__preview" alt="Preview">
+              <span class="filter__label">人像滤镜</span>
+            </div>
+          </div>
         </i-col>
         <i-col span="5">
-          <img 
-            class="filter-imgd"
-            src="~/static/img/home/filter02.jpg"
-          >
-          <img 
-            class="filter-imge"
-            src="~/static/img/home/filter01.jpg"
-          >
+          <div class="filtera filter-img">
+            <div class="filter__previewbox">
+              <img src="~/static/img/home/filter02.jpg" class="filter__preview" alt="Preview">
+              <span class="filter__label">Effect #11</span>
+            </div>
+          </div>
+          <div class="filterb filter-img">
+            <div class="filter__previewbox">
+              <img src="~/static/img/home/filter01.jpg" class="filter__preview" alt="Preview">
+              <span class="filter__label">Effect #11</span>
+            </div>
+          </div>
         </i-col>
         <i-col span="4"></i-col>
-        <!-- <i-col span="4">1</i-col>
-        <i-col span="4">1</i-col>
-        <i-col span="4">1</i-col> -->
       </Row>
+      <div class="svg-wrapper">
+        <svg height="40" width="150" xmlns="http://www.w3.org/2000/svg">
+          <rect id="shape" height="40" width="150"/>
+          <a href=""><span class="spot"></span>Button 1</a>
+        </svg>
+      </div>
     </div>
     <div class="imgIdentify">
-      <h4>图片识别</h4>
+      <h4>图片识别</h4> 
       <Row
         class="code-row-bg"
         type="flex"
@@ -128,111 +138,160 @@ export default {
       max-width: 18%;
     }
   }
-  // .ccc {
-    // overflow: hidden;
-    .filter-imga {
-      width: 100%;
-      margin-bottom: 5%;
+  .filtera {
+    display: inline-block;
+    padding-bottom: 10%;
+    width: 90%;
+    margin: 0 auto;
+  }
+  .filterb {
+    display: inline-block;
+    width: 90%;
+    margin: 0 auto;
+  }
+  .filterc {
+    margin: 0 auto;
+    width: 90%;
+  }
+  .filter-img {
+    .filter__previewbox {
+      position: relative;
+      overflow: hidden;
+      &:before {
+        content: "";
+        background-color: var(--filterOverlay, rgba(0, 0, 0, 0.329));
+        width: 0;
+        height: 0;
+        padding: 25%;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: 2;
+        -webkit-transition: -webkit-transform calc(var(--filterAnimationDuration, .8s) / 2) ease;
+        transition: -webkit-transform calc(var(--filterAnimationDuration, .8s) / 2) ease;
+        transition: transform calc(var(--filterAnimationDuration, .8s) / 2) ease;
+        transition: transform calc(var(--filterAnimationDuration, .8s) / 2) ease, -webkit-transform calc(var(--filterAnimationDuration, .8s) / 2) ease;
+        -webkit-transform: translate(-50%, -50%) scale(0);
+        transform: translate(-50%, -50%) scale(0);
+      }
     }
-    .filter-imgb {
-      width: 100%;
+    .filter__preview {
+      outline: 2px solid white;
+      outline-offset: -15px;
+      max-width: 100%;
+      height: auto;
     }
-    .filter-imgc {
-      width: 85%;
+    &:hover {
+      .filter__previewbox:before {
+        -webkit-transform: translate(-50%, -50%) scale(4);
+        transform: translate(-50%, -50%) scale(4);
+        -webkit-transition-duration: var(--filterAnimationDuration, .8s);
+        transition-duration: var(--filterAnimationDuration, .8s);
+      }
+      .filter__label {
+        -webkit-transition-duration: calc(var(--filterAnimationDuration, .8s) / 4);
+        transition-duration: calc(var(--filterAnimationDuration, .8s) / 4);
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+      }
+      .filter__preview {
+        -webkit-transform: scale(1.2);
+        transform: scale(1.2);
+      }
     }
-    .filter-imgd {
-      width: 100%;
-    }
-    .filter-imge {
-      width: 100%;
-      margin-top: 5%;
-    }
-    .filter-span {
-      opacity: 0;
-      transition: all 0.6s;
+    .filter__label {
+      cursor: pointer;
+      color: rgb(255, 255, 255);
+      font-size: 30px;
+      text-align: center;
+      -webkit-transform: translate(-200%, -50%);
+      transform: translate(-300%, -50%);
+      -webkit-transition: -webkit-transform calc(var(--filterAnimationDuration, .8s) / 2) ease-out;
+      transition: -webkit-transform calc(var(--filterAnimationDuration, .8s) / 2) ease-out;
+      transition: transform calc(var(--filterAnimationDuration, .8s) / 2) ease-out;
+      transition: transform calc(var(--filterAnimationDuration, .8s) / 2) ease-out, -webkit-transform calc(var(--filterAnimationDuration, .8s) / 2) ease-out;
       position: absolute;
-      top: 20%;
-      left: 20%;
-      bottom: 20%;
-      right: 20%;
-      z-index: 111;
+      top: 50%;
+      left: 50%;
+      z-index: 3;
+      padding: 20px 30px;
+      &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        -webkit-transform-origin: right;
+        transform-origin: right;
+        -webkit-transform: scaleX(0);
+        transform: scaleX(0);
+        top: 0px;
+        left: 0;
+        height: 2px;
+        width: 100%;
+        background-color: #ffffff;
+        -webkit-transition: -webkit-transform 0.6s
+          cubic-bezier(0.55, 0, 0.1, 1);
+        transition: -webkit-transform 0.6s cubic-bezier(0.55, 0, 0.1, 1);
+        transition: transform 0.6s cubic-bezier(0.55, 0, 0.1, 1);
+        transition: transform 0.6s cubic-bezier(0.55, 0, 0.1, 1),
+          -webkit-transform 0.6s cubic-bezier(0.55, 0, 0.1, 1);
+      }
+      &:before {
+        content: '';
+        display: block;
+        position: absolute;
+        -webkit-transform-origin: left;
+        transform-origin: left;
+        -webkit-transform: scaleX(0);
+        transform: scaleX(0);
+        bottom: 0;
+        left: 0;
+        height: 2px;
+        width: 100%;
+        background-color: #ffffff;
+        -webkit-transition: -webkit-transform 0.6s
+          cubic-bezier(0.55, 0, 0.1, 1);
+        transition: -webkit-transform 0.6s cubic-bezier(0.55, 0, 0.1, 1);
+        transition: transform 0.6s cubic-bezier(0.55, 0, 0.1, 1);
+        transition: transform 0.6s cubic-bezier(0.55, 0, 0.1, 1),
+          -webkit-transform 0.6s cubic-bezier(0.55, 0, 0.1, 1);
+      }
       &:hover {
-        opacity: 1;
-        transform: scale(1.3);
-        background-color: rgba(201, 107, 255, 0.5);
-        a {
-          position: absolute;
-          top: 40%;
-          transform: translate(-50%);
-          font-size: 35px;
-          color: #ffffff;
-          &:after {
-            content: '';
-            display: block;
-            position: absolute;
-            -webkit-transform-origin: right;
-            transform-origin: right;
-            -webkit-transform: scaleX(0);
-            transform: scaleX(0);
-            top: 0px;
-            height: 2px;
-            width: 100%;
-            background-color: #ffffff;
-            -webkit-transition: -webkit-transform 0.6s
-              cubic-bezier(0.55, 0, 0.1, 1);
-            transition: -webkit-transform 0.6s cubic-bezier(0.55, 0, 0.1, 1);
-            transition: transform 0.6s cubic-bezier(0.55, 0, 0.1, 1);
-            transition: transform 0.6s cubic-bezier(0.55, 0, 0.1, 1),
-              -webkit-transform 0.6s cubic-bezier(0.55, 0, 0.1, 1);
-          }
-          &:before {
-            content: '';
-            display: block;
-            position: absolute;
-            -webkit-transform-origin: left;
-            transform-origin: left;
-            -webkit-transform: scaleX(0);
-            transform: scaleX(0);
-            bottom: 0;
-            height: 2px;
-            width: 100%;
-            background-color: #ffffff;
-            -webkit-transition: -webkit-transform 0.6s
-              cubic-bezier(0.55, 0, 0.1, 1);
-            transition: -webkit-transform 0.6s cubic-bezier(0.55, 0, 0.1, 1);
-            transition: transform 0.6s cubic-bezier(0.55, 0, 0.1, 1);
-            transition: transform 0.6s cubic-bezier(0.55, 0, 0.1, 1),
-              -webkit-transform 0.6s cubic-bezier(0.55, 0, 0.1, 1);
-          }
-          &:hover {
-            &:after {
-              -webkit-transform: scaleX(1);
-              transform: scaleX(1);
-              -webkit-transform-origin: left;
-              transform-origin: left;
-              -webkit-transition: -webkit-transform 0.6s
-                cubic-bezier(0.55, 0, 0.1, 1);
-              transition: -webkit-transform 0.6s cubic-bezier(0.55, 0, 0.1, 1);
-              transition: transform 0.6s cubic-bezier(0.55, 0, 0.1, 1);
-              transition: transform 0.6s cubic-bezier(0.55, 0, 0.1, 1),
-                -webkit-transform 0.6s cubic-bezier(0.55, 0, 0.1, 1);
-            }
-            &:before {
-              -webkit-transform: scaleX(1);
-              transform: scaleX(1);
-              -webkit-transform-origin: right;
-              transform-origin: right;
-              -webkit-transition: -webkit-transform 0.6s
-                cubic-bezier(0.55, 0, 0.1, 1);
-              transition: -webkit-transform 0.6s cubic-bezier(0.55, 0, 0.1, 1);
-              transition: transform 0.6s cubic-bezier(0.55, 0, 0.1, 1);
-              transition: transform 0.6s cubic-bezier(0.55, 0, 0.1, 1),
-                -webkit-transform 0.6s cubic-bezier(0.55, 0, 0.1, 1);
-            }
-          }
+        box-shadow: 5px 10px 40px 5px rgba(0, 0, 0, 0.5);
+        &:after {
+          -webkit-transform: scaleX(1);
+          transform: scaleX(1);
+          -webkit-transform-origin: left;
+          transform-origin: left;
+          -webkit-transition: -webkit-transform 0.6s
+            cubic-bezier(0.55, 0, 0.1, 1);
+          transition: -webkit-transform 0.6s cubic-bezier(0.55, 0, 0.1, 1);
+          transition: transform 0.6s cubic-bezier(0.55, 0, 0.1, 1);
+          transition: transform 0.6s cubic-bezier(0.55, 0, 0.1, 1),
+            -webkit-transform 0.6s cubic-bezier(0.55, 0, 0.1, 1);
+        }
+        &:before {
+          -webkit-transform: scaleX(1);
+          transform: scaleX(1);
+          -webkit-transform-origin: right;
+          transform-origin: right;
+          -webkit-transition: -webkit-transform 0.6s
+            cubic-bezier(0.55, 0, 0.1, 1);
+          transition: -webkit-transform 0.6s cubic-bezier(0.55, 0, 0.1, 1);
+          transition: transform 0.6s cubic-bezier(0.55, 0, 0.1, 1);
+          transition: transform 0.6s cubic-bezier(0.55, 0, 0.1, 1),
+            -webkit-transform 0.6s cubic-bezier(0.55, 0, 0.1, 1);
         }
       }
     }
-  // }
+    .filter__preview {
+      -webkit-transition: -webkit-transform calc(var(--filterAnimationDuration, .8s) / 2) cubic-bezier(0.71, 0.05, 0.29, 0.9);
+      transition: -webkit-transform calc(var(--filterAnimationDuration, .8s) / 2) cubic-bezier(0.71, 0.05, 0.29, 0.9);
+      transition: transform calc(var(--filterAnimationDuration, .8s) / 2) cubic-bezier(0.71, 0.05, 0.29, 0.9);
+      transition: transform calc(var(--filterAnimationDuration, .8s) / 2) cubic-bezier(0.71, 0.05, 0.29, 0.9), -webkit-transform calc(var(--filterAnimationDuration, .8s) / 2) cubic-bezier(0.71, 0.05, 0.29, 0.9);
+      -webkit-transform: scale(1);
+      transform: scale(1);
+    }
+  }
 }
 </style>

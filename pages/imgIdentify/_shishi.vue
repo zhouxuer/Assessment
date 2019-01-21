@@ -18,29 +18,29 @@ export default {
       audio: document.querySelector('audio')
     }
   },
-  // mounted () {
-  //   this.$nextTick(() => {
-  //     try {
-  //       // 检查是否能够调用麦克风
-  //       window.AudioContext = window.AudioContext || window.webkitAudioContext
-  //       navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia
-  //       window.URL = window.URL || window.webkitURL
-  //       audio_context = new AudioContext
-  //     console.log('navigator.getUserMedia ' + (navigator.getUserMedia ? 'available.' : 'not present!'))
-  //     } catch (e) {
-  //       alert('No web audio support in this browser!')
-  //     }
-  //     navigator.getUserMedia({ audio: true }, function (stream) {
-  //       this.recorder = new HZRecorder(stream)
-  //       console.log('初始化完成')
-  //     }, function(e) {
-  //       console.log('No live audio input: ' + e)
-  //     })
-  //   })
-  // },
+  mounted () {
+    this.$nextTick(() => {
+      try {
+        // 检查是否能够调用麦克风
+        window.AudioContext = window.AudioContext || window.webkitAudioContext
+        navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia
+        window.URL = window.URL || window.webkitURL
+        audio_context = new AudioContext
+      console.log('navigator.getUserMedia ' + (navigator.getUserMedia ? 'available.' : 'not present!'))
+      } catch (e) {
+        alert('No web audio support in this browser!')
+      }
+      navigator.getUserMedia({ audio: true }, function (stream) {
+        this.recorder = new HZRecorder(stream)
+        console.log('初始化完成')
+      }, function(e) {
+        console.log('No live audio input: ' + e)
+      })
+    })
+  },
   methods: {
     startRecording () {
-      HZRecorder.get(function (rec) {
+      HZRecorder.get((rec) => {
         this.recorder = rec
         this.recorder.start()
       })

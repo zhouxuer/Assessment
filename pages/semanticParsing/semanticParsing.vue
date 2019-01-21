@@ -1,7 +1,7 @@
 <template>
   <div class="ssss">
     <div>
-        <audio autoplay></audio>
+        <!-- <audio autoplay></audio> -->
         <input onclick="startRecording()" type="button" value="录音" />
         <input onclick="stopRecording()" type="button" value="停止" />
         <input onclick="playRecording()" type="button" value="播放" />
@@ -29,6 +29,46 @@ export default {
           clickable: true
         }
       }
+    }
+  },
+  methods: {
+      // let recorder
+
+    // let audio = document.querySelector('audio')
+
+    startRecording () {
+      HZRecorder.get(function (rec) {
+        recorder = rec
+        recorder.start()
+      })
+    },
+
+    stopRecording () {
+      recorder.stop()
+    },
+
+    playRecording () {
+      recorder.play(audio);
+    },
+
+    uploadAudio () {
+      recorder.upload("Handler1.ashx", function (state, e) {
+        switch (state) {
+          case 'uploading':
+            // let percentComplete = Math.round(e.loaded * 100 / e.total) + '%';
+            break
+          case 'ok':
+            // alert(e.target.responseText);
+            alert("上传成功")
+            break
+          case 'error':
+            alert("上传失败")
+            break
+          case 'cancel':
+            alert("上传被取消")
+            break
+        }
+      })
     }
   }
 }
