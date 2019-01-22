@@ -23,37 +23,26 @@ module.exports = {
   /*
   ** Global CSS
   */
-  css: [{ src: 'static/less/base.sass', lang: 'less' }],
+  css: [
+    { src: 'static/less/base.sass', lang: 'less' }
+  ],
   // eslint-disable-next-line no-dupe-keys
-  css: ['~assets/css/global.css'],
+  // css: ['~assets/css/global.css'],
   // eslint-disable-next-line no-dupe-keys
-  css: ['~assets/css/main.css'],
+  // css: ['~assets/css/main.css'],
 
   // eslint-disable-next-line no-dupe-keys
   // css: [{
   //   src: 'swiper/dist/css/swiper.css'
   // }],
-  // plugins: [{
-  //   src: '~plugins/vue-awesome-swiper',
-  //   ssr: false
-  // }],
-  plugins: ['~/plugins/vue-awesome-swiper'],
-
-  // eslint-disable-next-line no-dupe-keys
-  css: [{
-    src: 'swiper/dist/css/swiper.css'
-  }],
-  // eslint-disable-next-line no-dupe-keys
-  plugins: [{
-    src: '~/plugins/vue-swiper.js',
-    ssr: false
-  }],
 
   /*
   ** Plugins to load before mounting the App
   */
-  // eslint-disable-next-line no-dupe-keys
-  plugins: [{ src: '~plugins/iview', ssr: true }],
+  plugins: [
+    { src: '~plugins/iview', ssr: true },
+    { src: '~/plugins/vue-swiper', ssr: false }
+  ],
   proxy: {
     '/app/*': {
       target: 'http://xxx:8080',

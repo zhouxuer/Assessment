@@ -2,11 +2,13 @@
   <div class="aaa">
     <img
       class="advertising-text"
-      src="../../static/img/home/advertising.png"
+      src="~/static/img/home/advertising.png"
     >
     <Carousel
-      v-model="value2"
-      autoplay
+      v-model="value3"
+      :autoplay="setting.autoplay"
+      :autoplay-speed="setting.autoplaySpeed"
+      :easing="setting.easing"
       loop
       class="bbb"
     >
@@ -19,16 +21,6 @@
           class="demo-carousel advertising-img"
         >
       </CarouselItem>
-      <!-- <CarouselItem>
-        <div class="demo-carousel">
-          <video
-            src="~/assets/img/advertising04.mp4"
-            type="video/mp4"
-            poster="~/assets/img/advertising04.jpg"
-            preload="none"
-          >1</video>
-        </div>
-      </CarouselItem> -->
     </Carousel>
   </div>
 </template>
@@ -36,7 +28,12 @@
 export default {
   data () {
     return {
-      value2: 0,
+      value3: 0,
+      setting: {
+        autoplay: true,
+        autoplaySpeed: 3500,
+        easing: 'fade'
+      },
       advertImgArr: [
         {
           id: 1,
@@ -49,10 +46,6 @@ export default {
         {
           id: 3,
           url: require('~/static/img/home/advertising03.jpg')
-        },
-        {
-          id: 4,
-          url: require('~/static/img/home/advertising04.jpg')
         }
       ]
     }

@@ -1,10 +1,10 @@
 <template>
   <div>
     <div class="con">
-      <!-- <div class="header">
+      <div class="header">
         <h2>Beneath the Moonlight</h2>
-      </div> -->
-      <!-- <div class="h-con">
+      </div>
+      <div class="h-con">
         <div class="hill2"></div>
         <div class="hill"></div>
         <div class="hill3"></div>
@@ -18,7 +18,7 @@
         <div class="moon"></div>
         <div class="moon"></div>
         <div class="moon"></div>
-      </div> -->
+      </div>
       <div class="shoot"></div>
       <div class="shoot"></div>
       <div class="shoot"></div>

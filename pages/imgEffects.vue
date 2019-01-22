@@ -7,7 +7,7 @@
       <Row>
         <i-col :xs="0" :sm="2" :md="3" :lg="4">.</i-col>
         <i-col :xs="24" :sm="20" :md="18" :lg="16" class="content">
-          <div class="content-img">
+          <div ref="element" class="content-img">
             <img :src="imgUrl">
           </div>
 
@@ -25,7 +25,7 @@
           </div>
 
           <div class="content-effects">
-            <Tabs value="name1">
+            <Tabs :value="this.active && this.$route.params.newsId">
               <TabPane
                 class="effects-switch"
                 v-for="(item) in switchFilter"
@@ -72,6 +72,7 @@ export default {
   },
   data () {
     return {
+      active: '1',
       imgUrl: '',
       imgUrlBase64: '',
       imgBase64: '',
@@ -625,7 +626,7 @@ export default {
         },
         {
           id: '5',
-          title: '大头贴',
+          title: '动画贴纸',
           images: [
             {
               id: 1,
@@ -787,7 +788,8 @@ export default {
       ]
     }
   },
-  created () {},
+  mounted () {
+  },
   methods: {
     // 上传图片并转码
     changeImg (e) {
@@ -815,12 +817,13 @@ export default {
               // let scale = ''
               // if (w > h) {
               //   scale = w / h
+              //   w = window.getComputedStyle(this.$refs.element).width
+              //   h = w / scale
               // } else {
               //   scale = h / w
+              //   h = window.getComputedStyle(this.$refs.element).height
+              //   w = w / scale
               // }
-              let scale = w / h
-              w = 300
-              h = w / scale
               // 默认图片质量为0.7，quality值越小，所绘制出的图像越模糊
               let quality = 0.7
               // 生成canvas
@@ -851,21 +854,25 @@ export default {
       }
     },
     createEffects (effects, img) {
-      switch (effects) {
-        case '1':
-          this.filterPortrait(img)
-          break
-        case '2':
-          this.filterScenery(img)
-          break
-        case '3':
-          this.faceMakeup(img)
-          break
-        case '4':
-          this.faceDrag(img)
-          break
-        default:
-          this.photo(img)
+      if (this.imgUrl !== '') {
+        switch (effects) {
+          case '1':
+            this.filterPortrait(img)
+            break
+          case '2':
+            this.filterScenery(img)
+            break
+          case '3':
+            this.faceMakeup(img)
+            break
+          case '4':
+            this.faceDrag(img)
+            break
+          default:
+            this.photo(img)
+        }
+      } else {
+        this.$Message.error('请先上传图片在尝试哦！')
       }
     },
     originalImage () {
@@ -1060,19 +1067,20 @@ export default {
     background-attachment: fixed;
     margin-top: 100px;
     text-align: center;
+    // width: 100%;
+    height: 850px;
     .content-img {
+      background-image: url('../static/img/imgEffects/ingBg.png');
+      background-position: center center;
+      background-repeat: no-repeat;
       text-align: center;
-      position: relative;
-      z-index: 10;
-      margin: 4% auto 2%;
+      margin: 3% auto 2%;
       width: 60%;
-      padding-bottom: 40%;
+      height: 60%;
       background-color: #fff;
-      overflow: hidden;
       img {
-        position: absolute;
-        z-index: 30;
-        display: inline-block;
+        max-width: 100%;
+        max-height: 100%;
         margin: auto;
       }
     }
@@ -1149,8 +1157,9 @@ export default {
           margin: 0 5px;
           list-style: none;
           .effects-img {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.20);
             border-radius: 50%;
-            border: 2px solid #8d78b1;
+            border: 1px solid #8d78b1;
           }
           .effects-btn {
             font-size: 16px;
@@ -1164,12 +1173,16 @@ export default {
             font-weight: bold;
             color: rgb(255, 255, 255);
             opacity: 0;
-            border: 2px solid rgb(255, 255, 255);
-            background-image: linear-gradient(-135deg, #8d78b1, #8d78b1 50%, #fff 50%, #fff);
+            border: 1px solid rgb(255, 255, 255);
+            background-image: linear-gradient(-135deg, #8d78b1b9, #8d78b1c7 50%, #fff 50%, #fff);
             background-size: 100% 500%;
             background-position: bottom;
             -webkit-transition: all 0.4s ease;
             &:hover {
+              opacity: 1;
+              background-position: top;
+            }
+            &:active  {
               opacity: 1;
               background-position: top;
             }

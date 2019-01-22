@@ -4,7 +4,7 @@
       <bg/>
     </div>
     <div>
-      <a href="../imgIdentify/_shishi.vue">1111111</a>
+      <!-- <a href="../imgIdentify/_shishi.vue">1111111</a> -->
       <Row>
         <i-col :xs="0" :sm="2" :md="3" :lg="4">.</i-col>
         <i-col :xs="24" :sm="20" :md="18" :lg="16" class="content">

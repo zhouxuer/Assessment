@@ -3,16 +3,17 @@
     <Menu
       mode="horizontal"
       theme="dark"
-      active-name="1"
+      :active-name="$route.path"
+      router
     >
-      <span class="layout-logo">1</span>
+      <span class="layout-logo"></span>
       <div class="layout-nav">
         <template v-for="(item) in config">
           <Menu-Item
             v-if="!item.children"
             :key="item.name"
             :to="item.to"
-            :name="item.name"
+            :name="item.to"
           >
             {{ item.title }}
           </Menu-Item>
@@ -20,7 +21,7 @@
             v-else
             :key="item.name"
             :to="item.title"
-            :name="item.name"
+            :name="item.to"
           >
             <template slot="title">
               {{ item.title }}
@@ -29,7 +30,7 @@
               v-for="(item) in item.children"
               :key="item.name"
               :to="item.to"
-              :name="item.name"
+              :name="item.to"
             >
               {{ item.title }}
             </Menu-Item>
@@ -78,7 +79,8 @@ export default {
   }
   .layout-nav {
     width: 800px;
-    margin-left: 50%;
+    // margin-right: 80%;
+    margin-left: 60%;
     .ivu-menu-submenu {
       padding: 0 40px;
     }
