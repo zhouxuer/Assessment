@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <div class="bg">
-      <bg/>
+      <bgg/>
     </div>
     <div>
       <!-- <a href="../imgIdentify/_shishi.vue">1111111</a> -->
@@ -117,14 +117,14 @@
   </div>
 </template>
 <script>
-import bg from '~/assets/bg.vue'
+import bgg from '~/assets/bgg.vue'
 import config from '~/assets/js/config.js'
 import axios from 'axios'
 import md5 from 'md5'
 import Qs from 'Qs'
 export default {
   components: {
-    bg
+    bgg
   },
   data () {
     return {

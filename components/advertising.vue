@@ -1,18 +1,12 @@
 <template>
-  <div class="aaa">
+  <div class="swiper swiperBox content" v-swiper:swiper="swiperOption" ref="swiperBox">
     <img
       class="advertising-text"
       src="~/static/img/home/advertising.png"
     >
-    <Carousel
-      v-model="value3"
-      :autoplay="setting.autoplay"
-      :autoplay-speed="setting.autoplaySpeed"
-      :easing="setting.easing"
-      loop
-      class="bbb"
-    >
-      <CarouselItem
+    <div class="swiper-wrapper">
+      <div
+        class="swiper-slide"
         v-for="(item) in advertImgArr"
         :key="item.id"
       >
@@ -20,19 +14,33 @@
           :src="item.url"
           class="demo-carousel advertising-img"
         >
-      </CarouselItem>
-    </Carousel>
+      </div>
+    </div>
+    <div class="swiper-pagination"  slot="pagination"></div> 
   </div>
 </template>
 <script>
 export default {
   data () {
     return {
-      value3: 0,
-      setting: {
-        autoplay: true,
-        autoplaySpeed: 3500,
-        easing: 'fade'
+      swiperOption: {
+        spaceBetween: 30,
+        effect: 'fade',
+        slidesPerView: 1,
+        loop: true,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+          dynamicBullets: true
+        },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev'
+        },
+        autoplay: {
+          delay: 3000,
+          disableOnInteraction: false
+        }
       },
       advertImgArr: [
         {
@@ -53,24 +61,16 @@ export default {
 }
 </script>
 <style scoped lang="less">
-.aaa {
+.content {
   width: 100%;
   margin: 0;
   padding: 0;
   position: relative;
-  .bbb {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    .advertising-img {
-      max-width: 100%;
-    }
-  }
   .advertising-text {
     position: absolute;
     max-width: 35%;
     left: 8%;
-    z-index: 1;
+    z-index: 1000;
     top: 20%;
   }
 }

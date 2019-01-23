@@ -1,27 +1,29 @@
 <template>
   <div class="page">
     <div class="bg">
-      <bg/>
+      <bgg/>
     </div>
     <div>
       <Row>
         <i-col :xs="0" :sm="2" :md="3" :lg="4">.</i-col>
         <i-col :xs="24" :sm="20" :md="18" :lg="16" class="content">
-          <div ref="element" class="content-img">
-            <img :src="imgUrl">
-          </div>
+          <div class="ssss">
+            <div ref="element" class="content-img">
+              <img :src="imgUrl">
+            </div>
 
-          <div class="content-btn">
-            <button class="btn-upload">
-              <span>上传图片</span>
-              <input
-                type="file"
-                class="upload"
-                @change="changeImg($event)"
-              >
-            </button>
-            <button class="btn-upload" @click="originalImage"><span>原图</span></button>
-            <button class="btn-upload" @click="ageDetection"><span>年龄检测</span></button>
+            <div class="content-btn">
+              <button class="btn-upload">
+                <span>上传图片</span>
+                <input
+                  type="file"
+                  class="upload"
+                  @change="changeImg($event)"
+                >
+              </button>
+              <button class="btn-upload" @click="originalImage"><span>原图</span></button>
+              <button class="btn-upload" @click="ageDetection"><span>年龄检测</span></button>
+            </div>
           </div>
 
           <div class="content-effects">
@@ -61,14 +63,14 @@
   </div>
 </template>
 <script>
-import bg from '~/assets/bg.vue'
+import bgg from '~/assets/bgg.vue'
 import config from '~/assets/js/config.js'
 import axios from 'axios'
 import md5 from 'md5'
 import Qs from 'Qs'
 export default {
   components: {
-    bg
+    bgg
   },
   data () {
     return {
@@ -1061,80 +1063,93 @@ export default {
     left: 0;
   }
   .content {
-    background-image: linear-gradient(to top, #d9afd9 0%, #97d9e1 100%);
+    background-color: rgba(243, 218, 255, 0.329);
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
-    margin-top: 100px;
+    margin-top: 120px;
     text-align: center;
-    // width: 100%;
-    height: 850px;
-    .content-img {
-      background-image: url('../static/img/imgEffects/ingBg.png');
-      background-position: center center;
-      background-repeat: no-repeat;
-      text-align: center;
-      margin: 3% auto 2%;
-      width: 60%;
-      height: 60%;
-      background-color: #fff;
-      img {
-        max-width: 100%;
-        max-height: 100%;
-        margin: auto;
-      }
-    }
-    .content-btn {
+    height: 800px;
+    width: 70%;
+    .ssss {
+      width: 100%;
       display: flex;
       flex-direction: row;
-      justify-content: space-between;
-      height: 50px;
-      width: 60%;
-      margin: 0 20% 2%;
-      .btn-upload {
-        border: none;
-        display: block;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      height: 65%;
+      margin: 5% 0% 3%;
+      .content-img {
+        background-image: url('../static/img/imgEffects/ingBg.png');
+        background-position: center;
+        background-repeat: no-repeat;
         text-align: center;
-        cursor: pointer;
-        outline: none;
-        overflow: hidden;
-        position: relative;
-        color: #fff;
-        font-weight: 700;
-        font-size: 15px;
-        background-color: #222;
-        width: 25%;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.20);
-        .upload {
-          position: absolute;
-          z-index: 20;
-          top: 0;
-          left: 0;
-          bottom: 0;
-          right: 0;
-          opacity: 0;
+        width: 60%;
+        height: 100%;
+        margin-left: 5%;
+        background-color: rgb(255, 255, 255);
+        img {
+          max-width: 100%;
+          max-height: 100%;
+          margin: auto;
+        }
+      }
+      .content-btn {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+        width: 40%;
+        margin: 0;
+        padding: 0;
+        .btn-upload {
+          height: 12%;
+          margin: auto;
+          border: none;
+          display: block;
+          text-align: center;
           cursor: pointer;
-        }
-        span {
+          outline: none;
+          overflow: hidden;
           position: relative;
-          z-index: 1;
-        }
-        &:after {
-          content: "";
-          position: absolute;
-          left: 0;
-          top: 0;
-          height: 490%;
-          width: 140%;
-          background: #78c7d2;
-          -webkit-transition: all .5s ease-in-out;
-          transition: all .5s ease-in-out;
-          -webkit-transform: translateX(-98%) translateY(-25%) rotate(45deg);
-          transform: translateX(-98%) translateY(-25%) rotate(45deg);
-        }
-        &:hover:after {
-          -webkit-transform: translateX(-9%) translateY(-25%) rotate(45deg);
-          transform: translateX(-9%) translateY(-25%) rotate(45deg);
+          color: #fff;
+          font-weight: 700;
+          font-size: 15px;
+          background-color: #222;
+          width: 50%;
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.20);
+          .upload {
+            position: absolute;
+            z-index: 20;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            opacity: 0;
+            cursor: pointer;
+          }
+          span {
+            position: relative;
+            z-index: 1;
+          }
+          &:after {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 490%;
+            width: 140%;
+            background:rgb(255, 181, 249);
+            -webkit-transition: all .5s ease-in-out;
+            transition: all .5s ease-in-out;
+            -webkit-transform: translateX(-98%) translateY(-25%) rotate(45deg);
+            transform: translateX(-98%) translateY(-25%) rotate(45deg);
+          }
+          &:hover:after {
+            -webkit-transform: translateX(-9%) translateY(-25%) rotate(45deg);
+            transform: translateX(-9%) translateY(-25%) rotate(45deg);
+          }
         }
       }
     }

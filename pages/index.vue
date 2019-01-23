@@ -1,113 +1,148 @@
 <template>
-  <div class="sss">
-    <!-- <div class="bg">
-      <bg/>
-    </div> -->
-    <advertising/>
-    <div class="faceIdentify">
-      <h1 class="faceIdentify-title">图片特效
-        <p><i>— Photo effects —</i></p>
-      </h1>
-      <Row
-        class="code-row-bg"
-        type="flex"
-        justify="center"
-      >
-        <i-col span="4"></i-col>
-        <i-col span="5">
-          <div class="filtera filter-img">
-            <div class="filter__previewbox">
-              <img src="~/static/img/home/filter01.jpg" class="filter__preview" alt="Preview">
-              <nuxt-link :to="{name:'imgEffects',params:{newsId:'1'}}" class="filter__label">人像滤镜</nuxt-link>
-            </div>
+  <div>
+    <div class="swiper swiperBox content" v-swiper:swiper="swiperOption" ref="swiperBox">
+      <div class="bg">
+        <bg/>
+      </div>
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <advertising/>
+        </div>
+        <div class="swiper-slide faceIdentify">
+          <h1 class="faceIdentify-title">
+            图片特效
+            <p><i>— Photo effects —</i></p>
+          </h1>
+          <Row
+            class="code-row-bg"
+            type="flex"
+            justify="center"
+          >
+            <i-col span="4"></i-col>
+            <i-col span="5">
+              <div class="filtera filter-img">
+                <div class="filter__previewbox">
+                  <img src="~/static/img/home/filter01.jpg" class="filter__preview" alt="Preview">
+                  <nuxt-link :to="{name:'imgEffects',params:{newsId:'1'}}" class="filter__label">人像滤镜</nuxt-link>
+                </div>
+              </div>
+              <div class="filterb filter-img">
+                <div class="filter__previewbox">
+                  <img src="~/static/img/home/filter02.jpg" class="filter__preview" alt="Preview">
+                  <nuxt-link :to="{name:'imgEffects',params:{newsId:'2'}}" class="filter__label">风景滤镜</nuxt-link>
+                </div>
+              </div>
+            </i-col>
+            <i-col span="6">
+              <div class="filterc filter-img">
+                <div class="filter__previewbox">
+                  <img src="~/static/img/home/filter03.jpg" class="filter__preview" alt="Preview">
+                  <nuxt-link :to="{name:'imgEffects',params:{newsId:'3'}}" class="filter__label">人脸美妆</nuxt-link>
+                </div>
+              </div>
+            </i-col>
+            <i-col span="5">
+              <div class="filtera filter-img">
+                <div class="filter__previewbox">
+                  <img src="~/static/img/home/filter02.jpg" class="filter__preview" alt="Preview">
+                  <nuxt-link :to="{name:'imgEffects',params:{newsId:'4'}}" class="filter__label">人脸变妆</nuxt-link>
+                </div>
+              </div>
+              <div class="filterb filter-img">
+                <div class="filter__previewbox">
+                  <img src="~/static/img/home/filter01.jpg" class="filter__preview" alt="Preview">
+                  <nuxt-link :to="{name:'imgEffects',params:{newsId:'5'}}" class="filter__label">动画贴纸</nuxt-link>
+                </div>
+              </div>
+              </i-col>
+            <i-col span="4"></i-col>
+          </Row>
+        </div>
+        <div class="swiper-slide faceIdentify">
+          <h4 class="faceIdentify-title">
+            图片识别
+            <p><i>— Photo effects —</i></p>
+          </h4> 
+          <Row
+            class="code-row-bg"
+            type="flex"
+            justify="center"
+          >
+            <i-col span="4">1</i-col>
+            <i-col span="4">1</i-col>
+            <i-col span="4">1</i-col>
+            <i-col span="4">1</i-col>
+          </Row>
+        </div>
+        <div class="swiper-slide">
+          <div class="ingEffects">
+            <h4>图片特效</h4>
+            <Row
+              class="code-row-bg"
+              type="flex"
+              justify="center"
+            >
+              <i-col span="4">1</i-col>
+              <i-col span="4">1</i-col>
+              <i-col span="4">1</i-col>
+              <i-col span="4">1</i-col>
+            </Row>
           </div>
-          <div class="filterb filter-img">
-            <div class="filter__previewbox">
-              <img src="~/static/img/home/filter02.jpg" class="filter__preview" alt="Preview">
-              <nuxt-link :to="{name:'imgEffects',params:{newsId:'2'}}" class="filter__label">风景滤镜</nuxt-link>
-            </div>
-          </div>
-        </i-col>
-        <i-col span="6">
-          <div class="filterc filter-img">
-            <div class="filter__previewbox">
-              <img src="~/static/img/home/filter03.jpg" class="filter__preview" alt="Preview">
-              <nuxt-link :to="{name:'imgEffects',params:{newsId:'3'}}" class="filter__label">人脸美妆</nuxt-link>
-            </div>
-          </div>
-        </i-col>
-        <i-col span="5">
-          <div class="filtera filter-img">
-            <div class="filter__previewbox">
-              <img src="~/static/img/home/filter02.jpg" class="filter__preview" alt="Preview">
-              <nuxt-link :to="{name:'imgEffects',params:{newsId:'4'}}" class="filter__label">人脸变妆</nuxt-link>
-            </div>
-          </div>
-          <div class="filterb filter-img">
-            <div class="filter__previewbox">
-              <img src="~/static/img/home/filter01.jpg" class="filter__preview" alt="Preview">
-              <nuxt-link :to="{name:'imgEffects',params:{newsId:'5'}}" class="filter__label">动画贴纸</nuxt-link>
-            </div>
-          </div>
-        </i-col>
-        <i-col span="4"></i-col>
-      </Row>
-    </div>
-    <div class="imgIdentify">
-      <h4>图片识别</h4> 
-      <Row
-        class="code-row-bg"
-        type="flex"
-        justify="center"
-      >
-        <i-col span="4">1</i-col>
-        <i-col span="4">1</i-col>
-        <i-col span="4">1</i-col>
-        <i-col span="4">1</i-col>
-      </Row>
-    </div>
-    <div class="ingEffects">
-      <h4>图片特效</h4>
-      <Row
-        class="code-row-bg"
-        type="flex"
-        justify="center"
-      >
-        <i-col span="4">1</i-col>
-        <i-col span="4">1</i-col>
-        <i-col span="4">1</i-col>
-        <i-col span="4">1</i-col>
-      </Row>
-    </div>
-    <div class="semanticParsing">
-      <h4>语义解析</h4>
-      <Row
-        class="code-row-bg"
-        type="flex"
-        justify="center"
-      >
-        <i-col span="4">1</i-col>
-        <i-col span="4">1</i-col>
-        <i-col span="4">1</i-col>
-        <i-col span="4">1</i-col>
-      </Row>
+        </div>
+      </div>
+      <div class="swiper-pagination"  slot="pagination"></div>
     </div>
   </div>
 </template>
 <script>
-// import bg from '~/assets/bg.vue'
+import bg from '~/assets/bg.vue'
 import advertising from '~/components/advertising.vue'
-// import advertising from '~/pages/home/advertising.vue'
+import 'swiper/dist/css/swiper.css'
 export default {
   components: {
-    // bg,
+    bg,
     advertising
+  },
+  data () {
+    return {
+      // 所有配置均为可选（同Swiper配置）
+      swiperOption: {
+        hashNavigation: true,
+        direction: 'vertical',
+        slidesPerView: 1,
+        spaceBetween: 30,
+        shortSwipes: false,
+        mousewheel: true,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true
+        }
+      }
+    }
+  },
+  swiper () {
+    // 如果你需要得到当前的swiper对象来做一些事情，你可以像下面这样定义一个方法属性来获取当前的swiper对象，同时notNextTick必须为true
+    return this.$refs.swiperBox.swiper
   }
+  // methods: {
+  //   stopSwiper () {
+  //   //   this.swiper.autoplay.stop()
+  //   },
+  //   startSwiper () {
+  //   //   this.swiper.autoplay.start()
+  //   }
+  // }
 }
 </script>
 <style scoped lang="less">
-.sss {
-  width: 100%;
+.content {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  // width: 100%;
+  // height: 900px;
   text-align: center;
   .bg {
     position: fixed;
@@ -118,10 +153,11 @@ export default {
     left: 0;
   }
   .faceIdentify {
+    margin-top: 80px;
     .faceIdentify-title {
-      margin: 40px 0;
+      margin: 20px 0;
       font-size: 35px;
-      color: rgb(44, 44, 44);
+      color: rgb(255, 255, 255);
       p {
         margin-top: 5px;
         font-family:"Times New Roman",Georgia,Serif;
@@ -156,7 +192,7 @@ export default {
           overflow: hidden;
           &:before {
             content: "";
-            background-color: var(--filterOverlay, rgba(0, 0, 0, 0.329));
+            background-color: var(--filterOverlay, rgba(255, 181, 249, 0.329));
             width: 0;
             height: 0;
             padding: 25%;
@@ -291,9 +327,6 @@ export default {
         }
       }
     }
-  }
-  .imgIdentify {
-    margin-top: 50px;
   }
 }
 </style>

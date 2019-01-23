@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <div class="nav">
       <Nav/>
     </div>
@@ -22,8 +21,17 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped>
+template {
+  height: 100%;
+  width: 100%;
+}
+.nuxt {
+  height: 100%;
+  width: 100%; 
+}
 html {
+  height: 100%;
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, 'Helvetica Neue', Arial, sans-serif;
   font-size: 16px;

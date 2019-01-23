@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="con">
-      <div class="header">
+      <!-- <div class="header">
         <h2>Beneath the Moonlight</h2>
       </div>
       <div class="h-con">
@@ -18,7 +18,7 @@
         <div class="moon"></div>
         <div class="moon"></div>
         <div class="moon"></div>
-      </div>
+      </div> -->
       <div class="shoot"></div>
       <div class="shoot"></div>
       <div class="shoot"></div>
