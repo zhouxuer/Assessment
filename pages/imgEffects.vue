@@ -3,63 +3,61 @@
     <div class="bg">
       <bgg/>
     </div>
-    <div>
-      <Row>
-        <i-col :xs="0" :sm="2" :md="3" :lg="4">.</i-col>
-        <i-col :xs="24" :sm="20" :md="18" :lg="16" class="content">
-          <div class="ssss">
-            <div ref="element" class="content-img">
-              <img :src="imgUrl">
-            </div>
-
-            <div class="content-btn">
-              <button class="btn-upload">
-                <span>上传图片</span>
-                <input
-                  type="file"
-                  class="upload"
-                  @change="changeImg($event)"
-                >
-              </button>
-              <button class="btn-upload" @click="originalImage"><span>原图</span></button>
-              <button class="btn-upload" @click="ageDetection"><span>年龄检测</span></button>
-            </div>
+    <Row>
+      <i-col :xs="0" :sm="2" :md="3" :lg="4">.</i-col>
+      <i-col :xs="24" :sm="20" :md="18" :lg="16" class="content">
+        <div class="ssss">
+          <div ref="element" class="content-img">
+            <img :src="imgUrl">
           </div>
 
-          <div class="content-effects">
-            <Tabs :value="this.active && this.$route.params.newsId">
-              <TabPane
-                class="effects-switch"
-                v-for="(item) in switchFilter"
-                :key="item.id"
-                :label="item.title"
-                :name="item.id"
+          <div class="content-btn">
+            <button class="btn-upload">
+              <span>上传图片</span>
+              <input
+                type="file"
+                class="upload"
+                @change="changeImg($event)"
               >
-                <ul class="effects">
-                  <li 
-                    v-for="(img) in item.images"
-                    :key="img.id"
-                    class="effects-li"
-                  >
-                    <img
-                      :src="img.url"
-                      class="effects-img"
-                    >
-                    <a
-                      class="effects-btn"
-                      @click="createEffects(item.id, img.id)"
-                    >
-                    {{img.title}}
-                    </a>
-                  </li>
-                </ul>
-              </TabPane>
-            </Tabs>
+            </button>
+            <button class="btn-upload" @click="originalImage"><span>原图</span></button>
+            <button class="btn-upload" @click="ageDetection"><span>年龄检测</span></button>
           </div>
-        </i-col>
-        <i-col :xs="0" :sm="2" :md="3" :lg="4"></i-col>
-      </Row>
-    </div>
+        </div>
+
+        <div class="content-effects">
+          <Tabs :value="this.active && this.$route.params.newsId">
+            <TabPane
+              class="effects-switch"
+              v-for="(item) in switchFilter"
+              :key="item.id"
+              :label="item.title"
+              :name="item.id"
+            >
+              <ul class="effects">
+                <li 
+                  v-for="(img) in item.images"
+                  :key="img.id"
+                  class="effects-li"
+                >
+                  <img
+                    :src="img.url"
+                    class="effects-img"
+                  >
+                  <a
+                    class="effects-btn"
+                    @click="createEffects(item.id, img.id)"
+                  >
+                  {{img.title}}
+                  </a>
+                </li>
+              </ul>
+            </TabPane>
+          </Tabs>
+        </div>
+      </i-col>
+      <i-col :xs="0" :sm="2" :md="3" :lg="4"></i-col>
+    </Row>
   </div>
 </template>
 <script>

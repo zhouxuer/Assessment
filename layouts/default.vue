@@ -23,8 +23,15 @@ export default {
 </script>
 <style scoped>
 template {
+  position: relative;
   height: 100%;
   width: 100%;
+}
+.nav {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 100;
 }
 .nuxt {
   height: 100%;

@@ -53,10 +53,10 @@ export default {
 </script>
 <style scoped lang="less">
 .layout {
-  position: fixed;
-  width: 100%;
-  top: 0;
-  z-index: 1000;
+  // position: fixed;
+  // width: 100%;
+  // top: 0;
+  // z-index: 1000;
   .ivu-menu-dark {
     height: 85px;
     line-height: 85px;
