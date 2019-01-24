@@ -78,8 +78,8 @@ export default {
     left: 50px;
   }
   .layout-nav {
-    width: 800px;
-    // margin-right: 80%;
+    width: 40%;
+    margin-right: 80%;
     margin-left: 60%;
     .ivu-menu-submenu {
       padding: 0 40px;

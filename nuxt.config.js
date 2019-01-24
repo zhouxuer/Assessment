@@ -24,17 +24,18 @@ module.exports = {
   ** Global CSS
   */
   css: [
-    { src: 'static/less/base.sass', lang: 'less' }
+    { src: 'static/less/base.sass', lang: 'less' },
+    { src: 'swiper/dist/css/swiper.css' }
   ],
   // eslint-disable-next-line no-dupe-keys
   css: ['~assets/css/global.css'],
   // eslint-disable-next-line no-dupe-keys
-  css: ['~assets/css/main.css'],
+  // css: ['~assets/css/main.css'],
 
   // eslint-disable-next-line no-dupe-keys
-  css: [{
-    src: 'swiper/dist/css/swiper.css'
-  }],
+  // css: [{
+  //   src: 'swiper/dist/css/swiper.css'
+  // }],
 
   /*
   ** Plugins to load before mounting the App

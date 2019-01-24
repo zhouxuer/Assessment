@@ -97,7 +97,6 @@
 <script>
 import bg from '~/assets/bg.vue'
 import advertising from '~/components/advertising.vue'
-import 'swiper/dist/css/swiper.css'
 export default {
   components: {
     bg,

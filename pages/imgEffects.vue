@@ -1,13 +1,16 @@
 <template>
   <div class="page">
+
     <div class="bg">
       <bgg/>
     </div>
-    <Row>
+
+    <Row class="row">
       <i-col :xs="0" :sm="2" :md="3" :lg="4">.</i-col>
       <i-col :xs="24" :sm="20" :md="18" :lg="16" class="content">
+
         <div class="ssss">
-          <div ref="element" class="content-img">
+          <div ref="img" class="content-img">
             <img :src="imgUrl">
           </div>
 
@@ -55,9 +58,11 @@
             </TabPane>
           </Tabs>
         </div>
+
       </i-col>
-      <i-col :xs="0" :sm="2" :md="3" :lg="4"></i-col>
+      <i-col :xs="0" :sm="2" :md="3" :lg="4">.</i-col>
     </Row>
+    
   </div>
 </template>
 <script>
@@ -814,10 +819,13 @@ export default {
             image.onload = function () {
               // 默认按比例压缩
               let [w, h] = [image.width, image.height]
+              // let scale = w / h
+              // w = 300
+              // h = w / scale
               // let scale = ''
               // if (w > h) {
               //   scale = w / h
-              //   w = window.getComputedStyle(this.$refs.element).width
+              //   w =
               //   h = w / scale
               // } else {
               //   scale = h / w
@@ -1049,9 +1057,6 @@ export default {
 </script>
 <style scoped lang="less">
 .page {
-  width: 100%;
-  text-align: center;
-  position: relative;
   .bg {
     position: fixed;
     z-index: -1000;
@@ -1060,144 +1065,147 @@ export default {
     right: 0;
     left: 0;
   }
-  .content {
-    background-color: rgba(243, 218, 255, 0.329);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
-    margin-top: 120px;
-    text-align: center;
-    height: 800px;
-    width: 70%;
-    .ssss {
-      width: 100%;
-      display: flex;
-      flex-direction: row;
-      flex-wrap: nowrap;
-      justify-content: flex-start;
-      height: 65%;
-      margin: 5% 0% 3%;
-      .content-img {
-        background-image: url('../static/img/imgEffects/ingBg.png');
-        background-position: center;
-        background-repeat: no-repeat;
-        text-align: center;
-        width: 60%;
-        height: 100%;
-        margin-left: 5%;
-        background-color: rgb(255, 255, 255);
-        img {
-          max-width: 100%;
-          max-height: 100%;
-          margin: auto;
-        }
-      }
-      .content-btn {
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        height: 100%;
-        width: 40%;
-        margin: 0;
-        padding: 0;
-        .btn-upload {
-          height: 12%;
-          margin: auto;
-          border: none;
-          display: block;
-          text-align: center;
-          cursor: pointer;
-          outline: none;
-          overflow: hidden;
-          position: relative;
-          color: #fff;
-          font-weight: 700;
-          font-size: 15px;
-          background-color: #222;
-          width: 50%;
-          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.20);
-          .upload {
-            position: absolute;
-            z-index: 20;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            opacity: 0;
-            cursor: pointer;
-          }
-          span {
-            position: relative;
-            z-index: 1;
-          }
-          &:after {
-            content: "";
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 490%;
-            width: 140%;
-            background:rgb(255, 181, 249);
-            -webkit-transition: all .5s ease-in-out;
-            transition: all .5s ease-in-out;
-            -webkit-transform: translateX(-98%) translateY(-25%) rotate(45deg);
-            transform: translateX(-98%) translateY(-25%) rotate(45deg);
-          }
-          &:hover:after {
-            -webkit-transform: translateX(-9%) translateY(-25%) rotate(45deg);
-            transform: translateX(-9%) translateY(-25%) rotate(45deg);
-          }
-        }
-      }
-    }
-    .content-effects {
-      display: flex;
-      flex-direction: row;
-      .effects-switch {
+  .row {
+    margin: 0;
+    padding: 0;
+    .content {
+      background-color: rgba(243, 218, 255, 0.329);
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-attachment: fixed;
+      margin-top: 120px;
+      text-align: center;
+      height: 800px;
+      .ssss {
         width: 100%;
-      }
-      .ivu-tabs-bar {
-        border-bottom: 5px solid #000000;
-      }
-      .effects {
         display: flex;
         flex-direction: row;
-        overflow: auto;
-        .effects-li {
-          position: relative;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        height: 65%;
+        margin: 5% 0% 3%;
+        .content-img {
+          background-image: url('../static/img/imgEffects/ingBg.png');
+          background-position: center;
+          background-repeat: no-repeat;
           text-align: center;
-          margin: 0 5px;
-          list-style: none;
-          .effects-img {
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.20);
-            border-radius: 50%;
-            border: 1px solid #8d78b1;
+          width: 60%;
+          height: 100%;
+          margin-left: 5%;
+          background-color: rgb(255, 255, 255);
+          img {
+            max-width: 100%;
+            max-height: 100%;
+            margin: auto;
           }
-          .effects-btn {
-            font-size: 16px;
-            position: absolute;
-            padding-top: 41%;
-            top: 0;
-            bottom: 4%;
-            right: 0;
-            left: 0;
-            border-radius: 50%;
-            font-weight: bold;
-            color: rgb(255, 255, 255);
-            opacity: 0;
-            border: 1px solid rgb(255, 255, 255);
-            background-image: linear-gradient(-135deg, #8d78b1b9, #8d78b1c7 50%, #fff 50%, #fff);
-            background-size: 100% 500%;
-            background-position: bottom;
-            -webkit-transition: all 0.4s ease;
-            &:hover {
-              opacity: 1;
-              background-position: top;
+        }
+        .content-btn {
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          height: 100%;
+          width: 40%;
+          margin: 0;
+          padding: 0;
+          .btn-upload {
+            height: 12%;
+            margin: auto;
+            border: none;
+            display: block;
+            text-align: center;
+            cursor: pointer;
+            outline: none;
+            overflow: hidden;
+            position: relative;
+            color: #fff;
+            font-weight: 700;
+            font-size: 15px;
+            background-color: #222;
+            width: 50%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.20);
+            .upload {
+              position: absolute;
+              z-index: 20;
+              top: 0;
+              left: 0;
+              bottom: 0;
+              right: 0;
+              opacity: 0;
+              cursor: pointer;
             }
-            &:active  {
-              opacity: 1;
-              background-position: top;
+            span {
+              position: relative;
+              z-index: 1;
+            }
+            &:after {
+              content: "";
+              position: absolute;
+              left: 0;
+              top: 0;
+              height: 490%;
+              width: 140%;
+              background:rgb(255, 181, 249);
+              -webkit-transition: all .5s ease-in-out;
+              transition: all .5s ease-in-out;
+              -webkit-transform: translateX(-98%) translateY(-25%) rotate(45deg);
+              transform: translateX(-98%) translateY(-25%) rotate(45deg);
+            }
+            &:hover:after {
+              -webkit-transform: translateX(-9%) translateY(-25%) rotate(45deg);
+              transform: translateX(-9%) translateY(-25%) rotate(45deg);
+            }
+          }
+        }
+      }
+      .content-effects {
+        display: flex;
+        flex-direction: row;
+        .effects-switch {
+          width: 100%;
+        }
+        .ivu-tabs-bar {
+          border-bottom: 5px solid #000000;
+        }
+        .effects {
+          display: flex;
+          flex-direction: row;
+          overflow: auto;
+          .effects-li {
+            position: relative;
+            text-align: center;
+            margin: 0 5px;
+            list-style: none;
+            .effects-img {
+              box-shadow: 0 5px 15px rgba(0, 0, 0, 0.20);
+              border-radius: 50%;
+              border: 1px solid #8d78b1;
+            }
+            .effects-btn {
+              font-size: 16px;
+              position: absolute;
+              padding-top: 41%;
+              top: 0;
+              bottom: 4%;
+              right: 0;
+              left: 0;
+              border-radius: 50%;
+              font-weight: bold;
+              color: rgb(255, 255, 255);
+              opacity: 0;
+              border: 1px solid rgb(255, 255, 255);
+              background-image: linear-gradient(-135deg, #8d78b1b9, #8d78b1c7 50%, #fff 50%, #fff);
+              background-size: 100% 500%;
+              background-position: bottom;
+              -webkit-transition: all 0.4s ease;
+              &:hover {
+                opacity: 1;
+                background-position: top;
+              }
+              &:active  {
+                opacity: 1;
+                background-position: top;
+              }
             }
           }
         }
