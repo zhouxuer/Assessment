@@ -20,65 +20,64 @@
           <button class="btn-upload" @click="generate"><span>点击有惊喜</span></button>
         </div>
 
-        <div class="show">
-          <Row class="show-row" v-show="value2">
-            <i-col :xs="24" :sm="11" :md="11" :lg="11" class="translate">
-              <Dropdown trigger="custom" :visible="visible" class="translate-label-btn">
-                <a
-                  href="javascript:void(0)"
-                  @click="handleOpen"
-                  class="translate-label-text"
-                >
-                  {{this.labelValue}}
-                  <Icon type="ios-arrow-down"></Icon>
-                </a>
-                <DropdownMenu slot="list">
-                  <a
-                    v-for="item in translateLabel"
-                    :key="item.id"
-                    @click="handleClose(item.id, item.value)"
-                    class="translate-label-list"
-                  >
-                    {{item.value}}
-                  </a>
-                </DropdownMenu>
-              </Dropdown>
-              <Button class="translate-btn" type="primary" @click="translate">翻译文本</Button>
-              <Input
-                v-model="value2"
-                type="textarea"
-                :rows="4"
-                class="translate-text" />
-              <p>可以选择其它语言翻译试试看！</p>
-            </i-col>
-            <i-col :xs="0" :sm="2" :md="2" :lg="2">.</i-col>
-            <i-col :xs="24" :sm="11" :md="11" :lg="11" class="emotional">
-              <p class="emotional-title"><b>情感分析</b></p>
-              <hr/>
-              <div
-                class="emotional-progress"
-                v-show="value1"
-                v-for="item in emotionalArr"
-                :key="item.id"
+        <Row class="show-one" v-show="value2">
+          <i-col :xs="24" :sm="11" :md="11" :lg="11" class="translate">
+            <Dropdown trigger="custom" :visible="visible" class="translate-label-btn">
+              <a
+                href="javascript:void(0)"
+                @click="handleOpen"
+                class="translate-label-text"
               >
-                <Progress
-                  v-show="emotionalVal == item.polar"
-                  :percent="item.value"
-                  :stroke-width="20"
+                {{this.labelValue}}
+                <Icon type="ios-arrow-down"></Icon>
+              </a>
+              <DropdownMenu slot="list">
+                <a
+                  v-for="item in translateLabel"
+                  :key="item.id"
+                  @click="handleClose(item.id, item.value)"
+                  class="translate-label-list"
                 >
-                  <img :src="item.urlOne">
-                </Progress>
-                <div v-show="emotionalVal == item.polar" class="emotional-pet">
-                  <img :src="item.urlTwo">
-                  <p>{{item.text}}</p>
-                  <Button class="translate-btn" type="primary" @click="onChat">{{item.btn}}</Button>
-                </div>
+                  {{item.value}}
+                </a>
+              </DropdownMenu>
+            </Dropdown>
+            <Button class="translate-btn" type="primary" @click="translate">翻译文本</Button>
+            <Input
+              v-model="value2"
+              type="textarea"
+              :rows="6"
+              class="translate-text" />
+            <p>提示：可以选择其它语言翻译试试看！</p>
+          </i-col>
+          <i-col :xs="0" :sm="2" :md="2" :lg="2">.</i-col>
+          <i-col :xs="24" :sm="11" :md="11" :lg="11" class="emotional">
+            <p class="emotional-title"><b>情感分析</b></p>
+            <hr/>
+            <div
+              class="emotional-progress"
+              v-show="value1"
+              v-for="item in emotionalArr"
+              :key="item.id"
+            >
+              <Progress
+                v-show="emotionalVal == item.polar"
+                :percent="item.value"
+                :stroke-width="20"
+              >
+                <img :src="item.urlOne">
+              </Progress>
+              <div v-show="emotionalVal == item.polar" class="emotional-pet">
+                <img :src="item.urlTwo">
+                <span>开心值{{item.value}}%</span>
+                <p>{{item.text}}</p>
+                <Button class="translate-btn" type="primary" @click="onChat">{{item.btn}}</Button>
               </div>
-            </i-col>
-          </Row>
-        </div>
-   
-        <div class="show" v-show="chatShow">
+            </div>
+          </i-col>
+        </Row>
+
+        <div class="show-two" v-show="chatShow">
           <div class="chat">
             <div class="chat-content">
               <div
@@ -91,8 +90,8 @@
                 <p class="chat-content-receive">{{item.valueReceive}}</p>
               </div>
             </div>
-            <Button class="translate-btn close" type="primary" @click="close">关闭聊天</Button>
-            <Button class="translate-btn remove" type="primary" @click="remove">清空聊天记录</Button>
+            <Button class="translate-btn close" type="primary" @click="closeChat">关闭聊天</Button>
+            <Button class="translate-btn remove" type="primary" @click="removeChat">清空聊天记录</Button>
             <div class="chat-input">
               <Input
                 v-model="value3"
@@ -105,29 +104,34 @@
             </div>
           </div>
         </div>
-        <div v-show="intentionsVal">
-          <h2 class="intentions-title">意图成分</h2>
-          <div>
-            <h2 class="intentions-title">意图</h2>
-            <div
-              v-show="intentionsVal"
-              v-for="item in intentionsArr"
-              :key="item.id"
-            ><span v-if="item.id == intentionsVal">{{item.value}}</span></div>
-          </div>
-          <div>
-            <h2 class="intentions-title">成分</h2>
-            <div
-              v-show="compositionVal.length"
-              v-for="item in compositionVal"
-              :key="item.com_word"
-            >
-            <span v-for="aaa in compositionArr" :key="aaa.id" v-show="aaa.id == item.com_type">
-              <p>{{aaa.value}} {{item.com_word}}</p>
-              </span>
+
+        <div class="show-three" v-show="intentionsVal">
+          <h2 class="intentions">意图成分</h2>
+          <hr/>
+            <div class="meaning">
+              <p><b>意图：</b></p>
+              <div
+                v-show="intentionsVal"
+                v-for="item in intentionsArr"
+                :key="item.id"
+              >
+                <span v-if="item.id == intentionsVal">{{item.value}}</span>
+              </div>
             </div>
-          </div>
+            <div class="composition">
+              <p><b>成分：</b></p>
+              <div
+                v-show="compositionVal.length"
+                v-for="item in compositionVal"
+                :key="item.com_word"
+              >
+                <span v-for="(data, index) in compositionArr" :key="index" v-show="data.id == item.com_type">
+                <p>{{data.value}}：{{item.com_word}}</p>
+                </span>
+              </div>
+            </div>
         </div>
+
       </i-col>
       <i-col :xs="0" :sm="2" :md="3" :lg="4">.</i-col>
     </Row>
@@ -136,9 +140,8 @@
 </template>
 <script>
 import bgg from '~/assets/bgg.vue'
-import config from '~/assets/js/config.js'
+import global from '~/assets/js/global.js'
 import axios from 'axios'
-import md5 from 'md5'
 import Qs from 'Qs'
 export default {
   components: {
@@ -428,23 +431,11 @@ export default {
       value1: '',
       value2: '',
       value3: '',
-      appKey: '5YsLCOwtO5hcvx8e',
-      appId: '2110940915',
-      aaa: ''
+      data: ''
     }
   },
-  mounted () {
-    // this.sss()
-  },
   methods: {
-    handleOpen () {
-      this.visible = !this.visible
-    },
-    handleClose (id, value) {
-      this.translateType = id
-      this.labelValue = value
-      this.visible = false
-    },
+    // 惊喜按钮
     generate () {
       if (this.value1 !== '') {
         this.emotionalVal = null
@@ -455,56 +446,42 @@ export default {
         this.$Message.error('请先输入内容在尝试哦！')
       }
     },
+    handleOpen () {
+      this.visible = !this.visible
+    },
+    handleClose (id, value) {
+      this.translateType = id
+      this.labelValue = value
+      this.visible = false
+    },
+    // 打开聊天
     onChat () {
       this.chatShow = true
     },
-    close () {
+    // 关闭聊天
+    closeChat () {
       this.chatShow = false
     },
-    remove () {
+    // 清空聊天记录
+    removeChat () {
       this.chatContent = []
     },
     // 翻译
     translate () {
       let params = {
-        app_id: this.appId,
-        time_stamp: config.timeStamp,
-        nonce_str: config.nonceStr,
+        app_id: global.appId,
+        time_stamp: global.timeStamp,
+        nonce_str: global.nonceStr,
         type: this.translateType,
         text: this.value1
       }
-      // 将<key, value>请求参数对按key进行字典升序排序，得到有序的参数对列表N
-      const N = Object.keys(params).sort()
-      // console.log(N)
-      // 将列表N中的参数对按URL键值对的格式拼接成字符串，得到字符串T（如：key1=value1&key2=value2），
-      const TT = N.map(key => {
-        const value = params[key]
-        return `${key}=${encodeURIComponent(value)}`
-      })
-      // console.log(TT)
-      // URL键值拼接过程value部分需要URL编码，URL编码算法用大写字母，例如%E8，而不是小写%e8
-      const T = TT.join('&')
-      // console.log(T)
-      // 将应用密钥以app_key为键名，组成URL键值拼接到字符串T末尾，得到字符串S（如：key1=value1&key2=value2&app_key=密钥)
-      const S = `${T}&app_key=${this.appKey}`
-      // console.log(S)
-      // 对字符串S进行MD5运算，将得到的MD5值所有字符转换成大写，得到接口请求签名
-      const sign = md5(S).toUpperCase()
-      // console.log(sign)
-      // params.forEach(item => {
-      //   item.sign = sign
-      // })
-      const paramter = {
-        ...params,
-        sign
-      }
-      // console.log(paramter)
+      const paramter = global.signature(params)
       axios.post('/fcgi-bin/nlp/nlp_texttrans', Qs.stringify(paramter))
         .then(res => {
-          if (res.data.ret === 16390) {
-            this.$Message.error('刷新页面在尝试！')
-          } else {
+          if (res.data.ret === 0) {
             this.value2 = res.data.data.trans_text
+          } else if (res.data.ret === 16390) {
+            this.$Message.error('刷新页面在尝试！')
           }
         }).catch(err => {
           console.log(err)
@@ -513,23 +490,12 @@ export default {
     // 意图
     intentions () {
       let params = {
-        app_id: this.appId,
-        time_stamp: config.timeStamp,
-        nonce_str: config.nonceStr,
+        app_id: global.appId,
+        time_stamp: global.timeStamp,
+        nonce_str: global.nonceStr,
         text: this.value1
       }
-      const N = Object.keys(params).sort()
-      const TT = N.map(key => {
-        const value = params[key]
-        return `${key}=${encodeURIComponent(value)}`
-      })
-      const T = TT.join('&')
-      const S = `${T}&app_key=${this.appKey}`
-      const sign = md5(S).toUpperCase()
-      const paramter = {
-        ...params,
-        sign
-      }
+      const paramter = global.signature(params)
       axios.post('/fcgi-bin/nlp/nlp_wordcom', Qs.stringify(paramter))
         .then(res => {
           this.intentionsVal = res.data.data.intent
@@ -541,23 +507,12 @@ export default {
     // 情感
     emotional () {
       let params = {
-        app_id: this.appId,
-        time_stamp: config.timeStamp,
-        nonce_str: config.nonceStr,
+        app_id: global.appId,
+        time_stamp: global.timeStamp,
+        nonce_str: global.nonceStr,
         text: this.value1
       }
-      const N = Object.keys(params).sort()
-      const TT = N.map(key => {
-        const value = params[key]
-        return `${key}=${encodeURIComponent(value)}`
-      })
-      const T = TT.join('&')
-      const S = `${T}&app_key=${this.appKey}`
-      const sign = md5(S).toUpperCase()
-      const paramter = {
-        ...params,
-        sign
-      }
+      const paramter = global.signature(params)
       axios.post('/fcgi-bin/nlp/nlp_textpolar', Qs.stringify(paramter))
         .then(res => {
           this.emotionalVal = res.data.data.polar
@@ -574,24 +529,13 @@ export default {
         })
       }
       let params = {
-        app_id: this.appId,
-        time_stamp: config.timeStamp,
-        nonce_str: config.nonceStr,
-        session: config.nonceStr,
+        app_id: global.appId,
+        time_stamp: global.timeStamp,
+        nonce_str: global.nonceStr,
+        session: global.nonceStr,
         question: this.value3
       }
-      const N = Object.keys(params).sort()
-      const TT = N.map(key => {
-        const value = params[key]
-        return `${key}=${encodeURIComponent(value)}`
-      })
-      const T = TT.join('&')
-      const S = `${T}&app_key=${this.appKey}`
-      const sign = md5(S).toUpperCase()
-      const paramter = {
-        ...params,
-        sign
-      }
+      const paramter = global.signature(params)
       axios.post('/fcgi-bin/nlp/nlp_textchat', Qs.stringify(paramter))
         .then(res => {
           let answer = res.data.data.answer
@@ -599,6 +543,8 @@ export default {
             this.chatContent.push({
               valueReceive: answer
             })
+          } else {
+            this.$Message.error('小猫睡着了，刷新页面唤醒它！')
           }
           this.value3 = ''
         }).catch(err => {
@@ -623,23 +569,19 @@ export default {
     padding: 0;
     .content {
       background-color: rgba(243, 218, 255, 0.329);
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-attachment: fixed;
-      margin-top: 120px;
+      margin: 120px 0 80px;
       text-align: center;
-      height: 800px;
       .input {
         display: flex;
         flex-direction: row;
-        margin: 3% 3%;
-        height: 12%;
+        margin: 3% 3% 3%;
+        height: 100%;
         .input-text {
           width: 60%;
           margin: auto 0;
         }
         .btn-upload {
-          height: 65%;
+          height: 60px;
           width: 20%;
           margin: auto;
           border: none;
@@ -677,136 +619,105 @@ export default {
           }
         }
       }
-      .show {
+      .show-one {
         margin: 0 3%;
-        height: 35%;
-        .show-row {
+        height: 300px;
+        padding: 0;
+        .translate {
+          margin-bottom: 3%;
+          text-align: left;
           height: 100%;
-          margin: 0;
-          padding: 0;
-          .translate {
+          background-color: rgba(185, 235, 255, 0.726);
+          padding: 2% 2%;
+          .translate-label-btn {
+            display: inline-block;
             text-align: left;
-            height: 100%;
-            background-color: rgba(185, 235, 255, 0.726);
-            padding: 2% 2%;
-            .translate-label-btn {
-              display: inline-block;
-              text-align: left;
-              margin: auto;
-              width: 40%;
-              height: 30px;
-              border-radius: 5%;
-              background-color: #fff;
-              .translate-label-text {
-                line-height: 30px;
-                color: #000;
-                width: 100%;
-                margin: 0 10%;
-              }
-              .translate-label-list {
-                color: #000;
-                display: inline-block;
-                margin: 5px 5px  ;
-                padding: 5px 10px;
-                background-color: rgb(255, 255, 255);
-                &:hover {
-                  border-radius: 5%;
-                  background-color: rgb(214, 250, 255);
-                }
-              }
-            }
-            .translate-btn {
-              margin-left: 5%;
-            }
-            .translate-text {
-              margin-top: 2%;
-            }
-          }
-          .emotional {
-            text-align: left;
-            padding: 2% 2%;
-            height: 100%;
-            background-color: rgba(185, 235, 255, 0.726);
-            .emotional-title {
-              color: rgba(17, 17, 17, 0.726);
-              font-size: 16px;
-              // margin-bottom: 2%;
-            }
-            .emotional-progress {
-              margin-top: 2%;
-              .emotional-pet {
-                position: relative;
-                img {
-                  margin-left: 10%;
-                  max-width: 30%;
-                }
-                p {
-                  position: absolute;
-                  top: 20%;
-                  left: 50%;
-                }
-                button {
-                  position: absolute;
-                  top: 50%;
-                  left: 50%;
-                }
-              }
-            }
-          }
-        }
-        .words {
-          width: 100%;
-          height: 300px;
-          background-color: rgb(185, 235, 255);
-          position: relative;
-          .words-title {
-            width: 100%;
-            height: 40px;
+            margin: auto;
+            width: 40%;
+            border-radius: 5%;
             background-color: #fff;
+            .translate-label-text {
+              line-height: 30px;
+              color: #000;
+              width: 100%;
+              margin: 0 10%;
+            }
+            .translate-label-list {
+              color: #000;
+              display: inline-block;
+              margin: 5px 5px  ;
+              padding: 5px 10px;
+              background-color: rgb(255, 255, 255);
+              &:hover {
+                border-radius: 5%;
+                background-color: rgb(214, 250, 255);
+              }
+            }
           }
-          .words-part {
-            position:absolute;
-            left: 0;
-            width: 50%;
-            height: 300px;
-            background-color: rgb(255, 198, 198);
+          .translate-btn {
+            margin-left: 5%;
           }
-          .words-sense {
-            position:absolute;
-            right: 0;
-            width: 50%;
-            height: 300px;
-            background-color: rgb(198, 255, 233);
+          .translate-text {
+            margin-top: 2%;
+          }
+          p {
+            margin-top: 15px;
           }
         }
-        .noun {
-          width: 100%;
-          height: 300px;
-          background-color: rgb(253, 244, 193);
+        .emotional {
+          margin-bottom: 3%;
+          text-align: left;
+          padding: 2% 2%;
+          height: 100%;
+          background-color: rgba(185, 235, 255, 0.726);
+          .emotional-title {
+            color: rgba(17, 17, 17, 0.726);
+            font-size: 16px;
+          }
+          .emotional-progress {
+            margin-top: 2%;
+            .emotional-pet {
+              position: relative;
+              img {
+                margin-left: 10%;
+                max-width: 30%;
+              }
+              span {
+                position: absolute;
+                top: 15%;
+                left: 50%;
+                font-size: 30px;
+              }
+              p {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+              }
+              button {
+                position: absolute;
+                top: 75%;
+                left: 50%;
+              }
+            }
+          }
         }
-        .synonym {
-          width: 100%;
-          height: 300px;
-          background-color: rgb(253, 244, 193);
-        }
-        .intentions {
-          width: 100%;
-          height: 300px;
-          background-color: rgb(253, 244, 193);
-        }
+      }
+      .show-two {
+        margin: 0 3%;
+        height: 300px;
+        margin-bottom: 3%;
         .chat {
+          position: relative;
+          margin-top: 3%;
           width: 100%;
           height: 100%;
-          margin-top: 3%;
           background-color: rgba(252, 222, 255, 0.623);
           text-align: center;
-          position: relative;
           .chat-content {
             overflow: auto;
             width: 70%;
-            height: 100%;
-            margin: 15px auto 40px;
-            .chat-content-row {}
+            height: 80%;
+            margin: 30px auto 50px;
             .chat-content-send {
               background-color: rgb(255, 172, 172);
             }
@@ -826,11 +737,35 @@ export default {
           }
           .chat-input {
             position: absolute;
-            bottom: 15px;
+            bottom: 10px;
             width: 100%;
             .chat-text {
               width: 80%;
             }
+          }
+        }
+      }
+      .show-three {
+        margin: 30px 3% 50px;
+        height: 120px;
+        background-color: rgba(185, 235, 255, 0.726);
+        text-align: left;
+        padding: 2% 2%;
+        .intentions {
+          color: rgba(17, 17, 17, 0.726);
+          font-size: 16px;
+        }
+        .meaning {
+          margin-top: 10px;
+          display: flex;
+          flex-direction: row;
+        }
+        .composition {
+          margin-top: 5px;
+          display: flex;
+          flex-direction: row;
+          p {
+            margin-right: 20px;
           }
         }
       }

@@ -9,7 +9,7 @@
           <advertising/>
         </div>
         <div class="swiper-slide faceIdentify">
-          <h1 class="faceIdentify-title">
+          <h1 class="title">
             图片特效
             <p><i>— Photo effects —</i></p>
           </h1>
@@ -18,8 +18,8 @@
             type="flex"
             justify="center"
           >
-            <i-col span="4"></i-col>
-            <i-col span="5">
+            <i-col :xs="0" :sm="2" :md="4" :lg="4"></i-col>
+            <i-col :xs="7" :sm="6" :md="5" :lg="5">
               <div class="filtera filter-img">
                 <div class="filter__previewbox">
                   <img src="~/static/img/home/filter01.jpg" class="filter__preview" alt="Preview">
@@ -33,7 +33,7 @@
                 </div>
               </div>
             </i-col>
-            <i-col span="6">
+            <i-col :xs="10" :sm="8" :md="6" :lg="6">
               <div class="filterc filter-img">
                 <div class="filter__previewbox">
                   <img src="~/static/img/home/filter03.jpg" class="filter__preview" alt="Preview">
@@ -41,7 +41,7 @@
                 </div>
               </div>
             </i-col>
-            <i-col span="5">
+            <i-col :xs="7" :sm="6" :md="5" :lg="5">
               <div class="filtera filter-img">
                 <div class="filter__previewbox">
                   <img src="~/static/img/home/filter02.jpg" class="filter__preview" alt="Preview">
@@ -55,14 +55,37 @@
                 </div>
               </div>
               </i-col>
-            <i-col span="4"></i-col>
+            <i-col :xs="0" :sm="2" :md="4" :lg="4"></i-col>
           </Row>
         </div>
-        <div class="swiper-slide faceIdentify">
-          <h4 class="faceIdentify-title">
+
+        <div class="swiper-slide interestingChat">
+          <h1 class="title">
+            趣味闲聊
+            <p><i>— Photo effects —</i></p>
+          </h1> 
+          <Row
+            class="code-row-bg"
+            type="flex"
+            justify="center"
+          >
+            <i-col :xs="0" :sm="2" :md="4" :lg="4"></i-col>
+            <i-col :xs="24" :sm="20" :md="16" :lg="16" class="interestingChat-content">
+              <div v-for="item in interestingChat" :key="item.id" class="translation">
+                <h1>{{item.title}}</h1>
+                <p>{{item.text}}</p>
+                <nuxt-link :to="{name:'imgIdentify'}">{{item.btn}}</nuxt-link>
+              </div>
+            </i-col>
+            <i-col :xs="0" :sm="2" :md="4" :lg="4"></i-col>
+          </Row>
+        </div>
+
+        <div class="swiper-slide ingEffects">
+          <h1 class="title">
             图片识别
             <p><i>— Photo effects —</i></p>
-          </h4> 
+          </h1> 
           <Row
             class="code-row-bg"
             type="flex"
@@ -73,21 +96,6 @@
             <i-col span="4">1</i-col>
             <i-col span="4">1</i-col>
           </Row>
-        </div>
-        <div class="swiper-slide">
-          <div class="ingEffects">
-            <h4>图片特效</h4>
-            <Row
-              class="code-row-bg"
-              type="flex"
-              justify="center"
-            >
-              <i-col span="4">1</i-col>
-              <i-col span="4">1</i-col>
-              <i-col span="4">1</i-col>
-              <i-col span="4">1</i-col>
-            </Row>
-          </div>
         </div>
       </div>
       <div class="swiper-pagination"  slot="pagination"></div>
@@ -116,21 +124,40 @@ export default {
           el: '.swiper-pagination',
           clickable: true
         }
-      }
+      },
+      interestingChat: [
+        {
+          id: 1,
+          title: '文本翻译',
+          text: `计算机翻译，结合了神经网络机器翻译和统计
+                 机器翻译的优点，对源语言文本进行深入理解，
+                 使翻译效果更为准确，大大减轻传统文本翻译
+                 的读写成本，翻译更轻松。`,
+          btn: '立即体验>>'
+        },
+        {
+          id: 2,
+          title: '语义解析',
+          text: `情感分析依托腾讯强大的机器学习能力和文本挖
+                 掘引擎，在腾讯千亿级社交语料的支撑下，不断
+                 完善算法模型，以基础NLP能力为技术支撑，联系
+                 上下文，深度理解语义，分析和识别文本中表达的
+                 情感状态（正面、负面、中立等）。`,
+          btn: '立即体验>>'
+        },
+        {
+          id: 3,
+          title: '智能闲聊',
+          text: `闲聊服务基于AI Lab领先的NLP引擎能力、数据运算
+                 能力和千亿级互联网语料数据的支持，同时集成了广
+                 泛的知识问答能力，可实现上百种自定义属性配置，
+                 以及男、女不同的语言风格及说话方式，从而让聊天
+                 变得更睿智、简单和有趣。`,
+          btn: '立即体验>>'
+        }
+      ]
     }
-  },
-  swiper () {
-    // 如果你需要得到当前的swiper对象来做一些事情，你可以像下面这样定义一个方法属性来获取当前的swiper对象，同时notNextTick必须为true
-    return this.$refs.swiperBox.swiper
   }
-  // methods: {
-  //   stopSwiper () {
-  //   //   this.swiper.autoplay.stop()
-  //   },
-  //   startSwiper () {
-  //   //   this.swiper.autoplay.start()
-  //   }
-  // }
 }
 </script>
 <style scoped lang="less">
@@ -140,8 +167,6 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  // width: 100%;
-  // height: 900px;
   text-align: center;
   .bg {
     position: fixed;
@@ -151,25 +176,24 @@ export default {
     right: 0;
     left: 0;
   }
-  .faceIdentify {
-    margin-top: 80px;
-    .faceIdentify-title {
-      margin: 20px 0;
-      font-size: 35px;
-      color: rgb(255, 255, 255);
-      p {
-        margin-top: 5px;
-        font-family:"Times New Roman",Georgia,Serif;
-        font-size: 18px;
-        color: rgb(255, 181, 249);
-        font-weight: 200;
-      }
-      img {
-        max-width: 18%;
-      }
+  .title {
+    font-size: 35px;
+    color: rgb(255, 255, 255);
+    p {
+      margin-top: 5px;
+      font-family:"Times New Roman",Georgia,Serif;
+      font-size: 18px;
+      color: rgb(255, 181, 249);
+      font-weight: 200;
     }
+    img {
+      max-width: 18%;
+    }
+  }
+  .faceIdentify {
+    margin-top: 110px;
     .code-row-bg {
-      margin-bottom: 50px;
+      margin-top: 30px;
       .filtera {
         display: inline-block;
         padding-bottom: 10%;
@@ -323,6 +347,40 @@ export default {
           transition: transform calc(var(--filterAnimationDuration, .8s) / 2) cubic-bezier(0.71, 0.05, 0.29, 0.9), -webkit-transform calc(var(--filterAnimationDuration, .8s) / 2) cubic-bezier(0.71, 0.05, 0.29, 0.9);
           -webkit-transform: scale(1);
           transform: scale(1);
+        }
+      }
+    }
+  }
+  .interestingChat {
+    text-align: center;
+    .interestingChat-content {
+      margin-top: 8%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+      .translation {
+        outline: 2px solid white;
+        outline-offset: -20px;
+        width: 30%;
+        height: 300px;
+        background-color:  rgba(243, 218, 255, 0.698);
+        text-align: left;
+        position: relative;
+        h1 {
+          margin: 10% 10% 5%;
+          color: rgb(255, 255, 255);
+        }
+        p {
+          margin: 0 10%;
+          color: rgb(255, 255, 255);
+          font-size: 14px;
+          text-indent: 2em;
+        }
+        a {
+          position: absolute;
+          bottom: 40px;
+          right: 50px;
         }
       }
     }

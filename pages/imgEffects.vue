@@ -67,9 +67,8 @@
 </template>
 <script>
 import bgg from '~/assets/bgg.vue'
-import config from '~/assets/js/config.js'
+import global from '~/assets/js/global.js'
 import axios from 'axios'
-import md5 from 'md5'
 import Qs from 'Qs'
 export default {
   components: {
@@ -81,8 +80,6 @@ export default {
       imgUrl: '',
       imgUrlBase64: '',
       imgBase64: '',
-      appKey: 'T7Ogcjb7gfuhrvuW',
-      appId: '2110945056',
       value1: 0,
       switchFilter: [
         {
@@ -822,16 +819,6 @@ export default {
               // let scale = w / h
               // w = 300
               // h = w / scale
-              // let scale = ''
-              // if (w > h) {
-              //   scale = w / h
-              //   w =
-              //   h = w / scale
-              // } else {
-              //   scale = h / w
-              //   h = window.getComputedStyle(this.$refs.element).height
-              //   w = w / scale
-              // }
               // 默认图片质量为0.7，quality值越小，所绘制出的图像越模糊
               let quality = 0.7
               // 生成canvas
@@ -861,6 +848,7 @@ export default {
         }, 1000)
       }
     },
+    // 特效
     createEffects (effects, img) {
       if (this.imgUrl !== '') {
         switch (effects) {
@@ -883,57 +871,35 @@ export default {
         this.$Message.error('请先上传图片在尝试哦！')
       }
     },
+    // 原图
     originalImage () {
       this.imgUrl = this.imgUrlBase64
     },
+    // 年龄检测
     ageDetection () {
       let params = {
-        app_id: this.appId,
-        time_stamp: config.timeStamp,
-        nonce_str: config.nonceStr,
+        app_id: global.appId,
+        time_stamp: global.timeStamp,
+        nonce_str: global.nonceStr,
         image: this.imgBase64
       }
-      const N = Object.keys(params).sort()
-      const TT = N.map(key => {
-        const value = params[key]
-        return `${key}=${encodeURIComponent(value)}`
-      })
-      const T = TT.join('&')
-      const S = `${T}&app_key=${this.appKey}`
-      const sign = md5(S).toUpperCase()
-      const paramter = {
-        ...params,
-        sign
-      }
+      const paramter = global.signature(params)
       axios.post('/fcgi-bin/ptu/ptu_faceage', Qs.stringify(paramter))
         .then(res => {
-          // console.log(res.data.data)
           this.imgUrl = 'data:image/png;base64,' + res.data.data.image
         }).catch(err => {
           console.log(err)
         })
     },
     filterPortrait (img) {
-      // console.log(img + '===')
       let params = {
-        app_id: this.appId,
-        time_stamp: config.timeStamp,
-        nonce_str: config.nonceStr,
+        app_id: global.appId,
+        time_stamp: global.timeStamp,
+        nonce_str: global.nonceStr,
         filter: img,
         image: this.imgBase64
       }
-      const N = Object.keys(params).sort()
-      const TT = N.map(key => {
-        const value = params[key]
-        return `${key}=${encodeURIComponent(value)}`
-      })
-      const T = TT.join('&')
-      const S = `${T}&app_key=${this.appKey}`
-      const sign = md5(S).toUpperCase()
-      const paramter = {
-        ...params,
-        sign
-      }
+      const paramter = global.signature(params)
       axios.post('/fcgi-bin/ptu/ptu_imgfilter', Qs.stringify(paramter))
         .then(res => {
           this.imgUrl = 'data:image/png;base64,' + res.data.data.image
@@ -943,25 +909,14 @@ export default {
     },
     filterScenery (img) {
       let params = {
-        app_id: this.appId,
-        time_stamp: config.timeStamp,
-        nonce_str: config.nonceStr,
+        app_id: global.appId,
+        time_stamp: global.timeStamp,
+        nonce_str: global.nonceStr,
         filter: img,
         image: this.imgBase64,
-        session_id: config.timeStamp
+        session_id: global.timeStamp
       }
-      const N = Object.keys(params).sort()
-      const TT = N.map(key => {
-        const value = params[key]
-        return `${key}=${encodeURIComponent(value)}`
-      })
-      const T = TT.join('&')
-      const S = `${T}&app_key=${this.appKey}`
-      const sign = md5(S).toUpperCase()
-      const paramter = {
-        ...params,
-        sign
-      }
+      const paramter = global.signature(params)
       axios.post('/fcgi-bin/vision/vision_imgfilter', Qs.stringify(paramter))
         .then(res => {
           this.imgUrl = 'data:image/png;base64,' + res.data.data.image
@@ -970,26 +925,14 @@ export default {
         })
     },
     faceMakeup (img) {
-      // console.log(img + '===')
       let params = {
-        app_id: this.appId,
-        time_stamp: config.timeStamp,
-        nonce_str: config.nonceStr,
+        app_id: global.appId,
+        time_stamp: global.timeStamp,
+        nonce_str: global.nonceStr,
         cosmetic: img,
         image: this.imgBase64
       }
-      const N = Object.keys(params).sort()
-      const TT = N.map(key => {
-        const value = params[key]
-        return `${key}=${encodeURIComponent(value)}`
-      })
-      const T = TT.join('&')
-      const S = `${T}&app_key=${this.appKey}`
-      const sign = md5(S).toUpperCase()
-      const paramter = {
-        ...params,
-        sign
-      }
+      const paramter = global.signature(params)
       axios.post('/fcgi-bin/ptu/ptu_facecosmetic', Qs.stringify(paramter))
         .then(res => {
           this.imgUrl = 'data:image/png;base64,' + res.data.data.image
@@ -1000,24 +943,13 @@ export default {
     faceDrag (img) {
       // console.log(img + '===')
       let params = {
-        app_id: this.appId,
-        time_stamp: config.timeStamp,
-        nonce_str: config.nonceStr,
+        app_id: global.appId,
+        time_stamp: global.timeStamp,
+        nonce_str: global.nonceStr,
         decoration: img,
         image: this.imgBase64
       }
-      const N = Object.keys(params).sort()
-      const TT = N.map(key => {
-        const value = params[key]
-        return `${key}=${encodeURIComponent(value)}`
-      })
-      const T = TT.join('&')
-      const S = `${T}&app_key=${this.appKey}`
-      const sign = md5(S).toUpperCase()
-      const paramter = {
-        ...params,
-        sign
-      }
+      const paramter = global.signature(params)
       axios.post('/fcgi-bin/ptu/ptu_facedecoration', Qs.stringify(paramter))
         .then(res => {
           this.imgUrl = 'data:image/png;base64,' + res.data.data.image
@@ -1027,24 +959,13 @@ export default {
     },
     photo (img) {
       let params = {
-        app_id: this.appId,
-        time_stamp: config.timeStamp,
-        nonce_str: config.nonceStr,
+        app_id: global.appId,
+        time_stamp: global.timeStamp,
+        nonce_str: global.nonceStr,
         sticker: img,
         image: this.imgBase64
       }
-      const N = Object.keys(params).sort()
-      const TT = N.map(key => {
-        const value = params[key]
-        return `${key}=${encodeURIComponent(value)}`
-      })
-      const T = TT.join('&')
-      const S = `${T}&app_key=${this.appKey}`
-      const sign = md5(S).toUpperCase()
-      const paramter = {
-        ...params,
-        sign
-      }
+      const paramter = global.signature(params)
       axios.post('/fcgi-bin/ptu/ptu_facesticker', Qs.stringify(paramter))
         .then(res => {
           this.imgUrl = 'data:image/png;base64,' + res.data.data.image
