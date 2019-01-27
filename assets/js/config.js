@@ -9,19 +9,19 @@ const navData = [
   {
     icon: '',
     title: '图片特效',
-    to: '/imgEffects',
+    to: '/effects',
     name: '2'
   },
   {
     icon: '',
-    title: '语言处理',
-    to: '/imgIdentify',
+    title: '趣味闲聊',
+    to: '/chat',
     name: '3'
   },
   {
     icon: '',
-    title: '图片识别',
-    to: '/faceIdentify',
+    title: '计算机视觉',
+    to: '/visual',
     name: '4'
   }
 ]

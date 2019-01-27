@@ -1,29 +1,47 @@
 <template>
-  <div class="page">
+  <div class="box">
 
     <div class="bg">
-      <bgg/>
+      <bgTwo/>
     </div>
 
     <Row class="row">
       <i-col :xs="0" :sm="2" :md="3" :lg="4">.</i-col>
       <i-col :xs="24" :sm="20" :md="18" :lg="16" class="content">
 
-        <div class="ssss">
+        <div class="content">
           <div ref="img" class="content-img">
             <img :src="imgUrl">
           </div>
 
           <div class="git-content">
-            <Tabs value="name1">
-              <TabPane label="看图说话" name="name1">
-                <p v-show="!seeImgValue">点击查看按钮查看内容</p>
-                <p v-show="seeImgValue">{{this.seeImgValue}}</p>
+            <Tabs
+              @on-click="onTabs"
+              :value="this.active && this.$route.params.nameId"
+            >
+              <TabPane label="看图说话" name="1">
+                <p v-show="!seeImgVal">点击查看按钮查看内容</p>
+                <h1 v-show="seeImgVal">{{this.seeImgVal}}</h1>
               </TabPane>
-              <TabPane label="多标签识别" name="name2">标签二的内容</TabPane>
-              <TabPane label="模糊图片识别" name="name3">标签三的内容</TabPane>
-              <TabPane label="美食图片识别" name="name4">标签四的内容</TabPane>
-              <TabPane label="场景物体识别" name="name4">标签四的内容</TabPane>
+              <TabPane label="标签识别" name="2">
+                <p v-show="!moreLabelVal">点击查看按钮查看内容</p>
+                <div
+                  v-show="moreLabelVal"
+                  v-for="(item, index) in moreLabelVal"
+                  :key="index"
+                >
+                  <p>{{item.tag_name}}</p>
+                  <Progress :percent="item.tag_confidence" :stroke-width="5"/>
+                </div>
+              </TabPane>
+              <TabPane label="模糊识别" name="3">
+                <p v-show="!fuzzyImgVal">点击查看按钮查看内容</p>
+                <h1 v-show="fuzzyImgVal">{{this.fuzzyImgVal}}</h1>
+              </TabPane>
+              <TabPane label="美食识别" name="4">
+                <p v-show="!foodImgVal">点击查看按钮查看内容</p>
+                <h1 v-show="foodImgVal">{{this.foodImgVal}}</h1>
+              </TabPane>
             </Tabs>
           </div>
         </div>
@@ -37,36 +55,56 @@
               @change="changeImg($event)"
             >
           </button>
-          <button class="btn-upload" @click="viewData"><span>查看</span></button>
+          <button
+            class="btn-upload"
+            @click="viewData"
+          ><span>查看</span></button>
         </div>
 
       </i-col>
       <i-col :xs="0" :sm="2" :md="3" :lg="4">.</i-col>
     </Row>
-    
+    <div v-show="loading">
+      <loading/>
+    </div>
   </div>
 </template>
 <script>
-import bgg from '~/assets/bgg.vue'
+import loading from '~/assets/loading.vue'
+import bgTwo from '~/assets/bgTwo.vue'
 import global from '~/assets/js/global.js'
 import axios from 'axios'
 import Qs from 'Qs'
 export default {
   components: {
-    bgg
+    bgTwo,
+    loading
   },
   data () {
     return {
+      loading: false,
       active: '1',
-      imgUrl: '',
+      imgUrl: require('~/static/img/imgEffects/ingBg.png'),
       imgUrlBase64: '',
       imgBase64: '',
-      seeImgValue: ''
+      seeImgVal: '',
+      moreLabelVal: '',
+      fuzzyImgVal: '',
+      foodImgVal: '',
+      tabsName: '1'
+    }
+  },
+  created () {
+    if (this.$route.params.nameId) {
+      this.tabsName = this.$route.params.nameId
+    } else {
+      this.tabsName = '1'
     }
   },
   methods: {
     // 上传图片并转码
     changeImg (e) {
+      this.loading = true
       const _this = this
       const imgLimit = 500 // 图片限制大小
       const files = e.target.files
@@ -110,6 +148,7 @@ export default {
               _this.imgUrlBase64 = base64
               let imgBase64 = base64.split(',')
               _this.imgBase64 = imgBase64[1]
+              _this.loading = false
             }
           }
           if (dd < files.length - 1) {
@@ -120,15 +159,64 @@ export default {
         }, 1000)
       }
     },
-    viewData () {
+    onTabs (name) {
+      this.tabsName = name
       if (this.imgUrl !== '') {
-        this.gitSeeImgValue()
-        this.gitLabelValue()
+        switch (name) {
+          case '1':
+            this.gitSeeImg()
+            break
+          case '2':
+            this.gitMoreLabel()
+            break
+          case '3':
+            this.gitFuzzyImg()
+            break
+          case '4':
+            this.gitFoodImg()
+            break
+          case '5':
+            this.gitScenario()
+            break
+          case '6':
+            this.gitObject()
+            break
+          default:
+        }
+      }
+    },
+    viewData () {
+      this.loading = true
+      if (this.imgUrl !== '') {
+        console.log(this.tabsName, '111')
+        switch (this.tabsName) {
+          case '1':
+            this.gitSeeImg()
+            break
+          case '2':
+            this.gitMoreLabel()
+            break
+          case '3':
+            this.gitFuzzyImg()
+            break
+          case '4':
+            this.gitFoodImg()
+            break
+          case '5':
+            this.gitScenario()
+            break
+          case '6':
+            this.gitObject()
+            break
+          default:
+        }
       } else {
         this.$Message.error('请先上传图片在尝试哦！')
       }
     },
-    gitSeeImgValue () {
+    // 看图说话
+    gitSeeImg () {
+      this.loading = true
       let params = {
         app_id: global.appId,
         time_stamp: global.timeStamp,
@@ -139,17 +227,21 @@ export default {
       const paramter = global.signature(params)
       axios.post('/fcgi-bin/vision/vision_imgtotext', Qs.stringify(paramter))
         .then(res => {
+          this.loading = false
           if (res.data.ret === 0) {
-            this.seeImgValue = res.data.data.text
+            this.seeImgVal = res.data.data.text
           } else if (res.data.ret === 16390) {
             this.$Message.error('刷新页面在尝试！')
           }
         }).catch(err => {
+          this.loading = false
           this.$Message.error('抱歉，网络异常！')
           console.log(err)
         })
     },
-    gitLabelValue () {
+    // 多标签识别
+    gitMoreLabel () {
+      this.loading = true
       let params = {
         app_id: global.appId,
         time_stamp: global.timeStamp,
@@ -159,13 +251,73 @@ export default {
       const paramter = global.signature(params)
       axios.post('/fcgi-bin/image/image_tag', Qs.stringify(paramter))
         .then(res => {
+          this.loading = false
           if (res.data.ret === 0) {
-            console.log(res.data.data.text)
-            // this.seeImgValue = res.data.data.text
+            this.moreLabelVal = res.data.data.tag_list
+            console.log(this.moreLabelVal)
           } else if (res.data.ret === 16390) {
             this.$Message.error('刷新页面在尝试！')
           }
         }).catch(err => {
+          this.loading = false
+          this.$Message.error('抱歉，网络异常！')
+          console.log(err)
+        })
+    },
+    // 模糊图片识别
+    gitFuzzyImg () {
+      this.loading = true
+      let params = {
+        app_id: global.appId,
+        time_stamp: global.timeStamp,
+        nonce_str: global.nonceStr,
+        image: this.imgBase64
+      }
+      const paramter = global.signature(params)
+      axios.post('/fcgi-bin/image/image_fuzzy', Qs.stringify(paramter))
+        .then(res => {
+          this.loading = false
+          if (res.data.ret === 0) {
+            let fuzzy = res.data.data.fuzzy
+            if (fuzzy) {
+              this.fuzzyImgVal = '图片模糊'
+            } else {
+              this.fuzzyImgVal = '图片不模糊'
+            }
+          } else if (res.data.ret === 16390) {
+            this.$Message.error('刷新页面在尝试！')
+          }
+        }).catch(err => {
+          this.loading = false
+          this.$Message.error('抱歉，网络异常！')
+          console.log(err)
+        })
+    },
+    // 美食图片识别
+    gitFoodImg () {
+      this.loading = true
+      let params = {
+        app_id: global.appId,
+        time_stamp: global.timeStamp,
+        nonce_str: global.nonceStr,
+        image: this.imgBase64
+      }
+      const paramter = global.signature(params)
+      axios.post('/fcgi-bin/image/image_food', Qs.stringify(paramter))
+        .then(res => {
+          this.loading = false
+          if (res.data.ret === 0) {
+            let food = res.data.data.food
+            if (food) {
+              this.foodImgVal = '图片中是食物'
+            } else {
+              this.foodImgVal = '图片中不是食物'
+            }
+          } else if (res.data.ret === 16390) {
+            this.$Message.error('刷新页面在尝试！')
+          }
+        }).catch(err => {
+          this.loading = false
           this.$Message.error('抱歉，网络异常！')
           console.log(err)
         })
@@ -174,7 +326,7 @@ export default {
 }
 </script>
 <style scoped lang="less">
-.page {
+.box {
   .bg {
     position: fixed;
     z-index: -1000;
@@ -194,7 +346,7 @@ export default {
       background-attachment: fixed;
       margin-top: 120px;
       text-align: center;
-      .ssss {
+      .content {
         width: 100%;
         display: flex;
         flex-direction: row;
@@ -204,18 +356,20 @@ export default {
         text-align: center;
         margin: 5% 0% 3%;
         .content-img {
-          background-image: url('../static/img/imgEffects/ingBg.png');
-          background-position: center;
-          background-repeat: no-repeat;
           text-align: center;
           width: 50%;
           height: 100%;
           margin-left: 5%;
           background-color: rgb(255, 255, 255);
+          display: flex;
+          align-items: center;
           img {
             max-width: 100%;
             max-height: 100%;
             margin: auto;
+            align-items: center;
+            min-width: 100%;
+            min-height: auto;
           }
         }
         .git-content {
@@ -228,7 +382,6 @@ export default {
         display: flex;
         flex-direction: row;
         justify-content: space-around;
-        // text-align: center;
         margin: auto;
         padding: 0;
         width: 80%;

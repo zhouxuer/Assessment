@@ -1,8 +1,8 @@
 <template>
-  <div class="page">
+  <div class="box">
 
     <div class="bg">
-      <bgg/>
+      <bgTwo/>
     </div>
 
     <Row class="row">
@@ -17,12 +17,21 @@
             placeholder="Enter something..."
             class="input-text"
           />
-          <button class="btn-upload" @click="generate"><span>点击有惊喜</span></button>
+          <button
+            class="btn-upload"
+            @click="generate"
+          >
+            <span>点击有惊喜</span>
+          </button>
         </div>
 
         <Row class="show-one" v-show="value2">
           <i-col :xs="24" :sm="11" :md="11" :lg="11" class="translate">
-            <Dropdown trigger="custom" :visible="visible" class="translate-label-btn">
+            <Dropdown
+              trigger="custom"
+              :visible="visible"
+              class="translate-label-btn"
+            >
               <a
                 href="javascript:void(0)"
                 @click="handleOpen"
@@ -42,7 +51,10 @@
                 </a>
               </DropdownMenu>
             </Dropdown>
-            <Button class="translate-btn" type="primary" @click="translate">翻译文本</Button>
+            <button
+              class="translate-btn chat-btn"
+              @click="translate"
+            >翻译文本</button>
             <Input
               v-model="value2"
               type="textarea"
@@ -63,7 +75,7 @@
               <Progress
                 v-show="emotionalVal == item.polar"
                 :percent="item.value"
-                :stroke-width="20"
+                :stroke-width="15"
               >
                 <img :src="item.urlOne">
               </Progress>
@@ -71,7 +83,10 @@
                 <img :src="item.urlTwo">
                 <span>开心值{{item.value}}%</span>
                 <p>{{item.text}}</p>
-                <Button class="translate-btn" type="primary" @click="onChat">{{item.btn}}</Button>
+                <button
+                  class="translate-btn chat-btn"
+                  @click="onChat"
+                >{{item.btn}}</button>
               </div>
             </div>
           </i-col>
@@ -90,8 +105,14 @@
                 <p class="chat-content-receive">{{item.valueReceive}}</p>
               </div>
             </div>
-            <Button class="translate-btn close" type="primary" @click="closeChat">关闭聊天</Button>
-            <Button class="translate-btn remove" type="primary" @click="removeChat">清空聊天记录</Button>
+            <button
+              class="translate-btn close chat-btn"
+              @click="closeChat"
+            >关闭聊天</button>
+            <button
+              class="translate-btn remove chat-btn"
+              @click="removeChat"
+            >清空聊天记录</button>
             <div class="chat-input">
               <Input
                 v-model="value3"
@@ -100,7 +121,10 @@
                 class="chat-text"
                 @keyup.enter.native="chat"
               />
-              <Button class="translate-btn" type="primary" @click="chat">发送聊天</Button>
+              <button
+                class="translate-btn chat-btn"
+                @click="chat"
+              >发送聊天</button>
             </div>
           </div>
         </div>
@@ -115,7 +139,9 @@
                 v-for="item in intentionsArr"
                 :key="item.id"
               >
-                <span v-if="item.id == intentionsVal">{{item.value}}</span>
+                <span
+                  v-if="item.id == intentionsVal"
+                >{{item.value}}</span>
               </div>
             </div>
             <div class="composition">
@@ -125,8 +151,11 @@
                 v-for="item in compositionVal"
                 :key="item.com_word"
               >
-                <span v-for="(data, index) in compositionArr" :key="index" v-show="data.id == item.com_type">
-                <p>{{data.value}}：{{item.com_word}}</p>
+                <span
+                  v-for="(data, index) in compositionArr"
+                  :key="index"
+                  v-show="data.id == item.com_type"
+                ><p>{{data.value}}：{{item.com_word}}</p>
                 </span>
               </div>
             </div>
@@ -135,21 +164,26 @@
       </i-col>
       <i-col :xs="0" :sm="2" :md="3" :lg="4">.</i-col>
     </Row>
-
+    <div v-show="loading">
+      <loading/>
+    </div>
   </div>
 </template>
 <script>
-import bgg from '~/assets/bgg.vue'
+import loading from '~/assets/loading.vue'
+import bgTwo from '~/assets/bgTwo.vue'
 import global from '~/assets/js/global.js'
 import axios from 'axios'
 import Qs from 'Qs'
 export default {
   components: {
-    bgg
+    bgTwo,
+    loading
   },
   data () {
     return {
       visible: false,
+      loading: false,
       translateLabel: [
         {
           id: 0,
@@ -468,6 +502,7 @@ export default {
     },
     // 翻译
     translate () {
+      this.loading = true
       let params = {
         app_id: global.appId,
         time_stamp: global.timeStamp,
@@ -478,17 +513,21 @@ export default {
       const paramter = global.signature(params)
       axios.post('/fcgi-bin/nlp/nlp_texttrans', Qs.stringify(paramter))
         .then(res => {
+          this.loading = false
           if (res.data.ret === 0) {
             this.value2 = res.data.data.trans_text
           } else if (res.data.ret === 16390) {
             this.$Message.error('刷新页面在尝试！')
           }
         }).catch(err => {
+          this.loading = false
+          this.$Message.error('抱歉，网络异常！')
           console.log(err)
         })
     },
     // 意图
     intentions () {
+      this.loading = true
       let params = {
         app_id: global.appId,
         time_stamp: global.timeStamp,
@@ -498,14 +537,22 @@ export default {
       const paramter = global.signature(params)
       axios.post('/fcgi-bin/nlp/nlp_wordcom', Qs.stringify(paramter))
         .then(res => {
-          this.intentionsVal = res.data.data.intent
-          this.compositionVal = res.data.data.com_tokens
+          this.loading = false
+          if (res.data.ret === 0) {
+            this.intentionsVal = res.data.data.intent
+            this.compositionVal = res.data.data.com_tokens
+          } else if (res.data.ret === 16390) {
+            this.$Message.error('刷新页面在尝试！')
+          }
         }).catch(err => {
+          this.loading = false
+          this.$Message.error('抱歉，网络异常！')
           console.log(err)
         })
     },
     // 情感
     emotional () {
+      this.loading = true
       let params = {
         app_id: global.appId,
         time_stamp: global.timeStamp,
@@ -515,14 +562,21 @@ export default {
       const paramter = global.signature(params)
       axios.post('/fcgi-bin/nlp/nlp_textpolar', Qs.stringify(paramter))
         .then(res => {
-          this.emotionalVal = res.data.data.polar
-          // console.log(this.emotionalVal)
+          this.loading = false
+          if (res.data.ret === 0) {
+            this.emotionalVal = res.data.data.polar
+          } else if (res.data.ret === 16390) {
+            this.$Message.error('刷新页面在尝试！')
+          }
         }).catch(err => {
+          this.loading = false
+          this.$Message.error('抱歉，网络异常！')
           console.log(err)
         })
     },
     // 聊天
     chat () {
+      this.loading = true
       if (this.value3 !== '') {
         this.chatContent.push({
           valueSend: this.value3
@@ -538,16 +592,23 @@ export default {
       const paramter = global.signature(params)
       axios.post('/fcgi-bin/nlp/nlp_textchat', Qs.stringify(paramter))
         .then(res => {
-          let answer = res.data.data.answer
-          if (answer !== '') {
-            this.chatContent.push({
-              valueReceive: answer
-            })
-          } else {
-            this.$Message.error('小猫睡着了，刷新页面唤醒它！')
+          this.loading = false
+          if (res.data.ret === 0) {
+            let answer = res.data.data.answer
+            if (answer !== '') {
+              this.chatContent.push({
+                valueReceive: answer
+              })
+            } else {
+              this.$Message.error('小猫睡着了，刷新页面唤醒它！')
+            }
+          } else if (res.data.ret === 16390) {
+            this.$Message.error('刷新页面在尝试！')
           }
           this.value3 = ''
         }).catch(err => {
+          this.loading = false
+          this.$Message.error('抱歉，网络异常！')
           console.log(err)
         })
     }
@@ -555,7 +616,7 @@ export default {
 }
 </script>
 <style scoped lang="less">
-.page {
+.box {
   .bg {
     position: fixed;
     z-index: -1000;
@@ -633,7 +694,7 @@ export default {
             display: inline-block;
             text-align: left;
             margin: auto;
-            width: 40%;
+            width: 200px;
             border-radius: 5%;
             background-color: #fff;
             .translate-label-text {
@@ -772,4 +833,15 @@ export default {
     }
   }
 }
+.chat-btn {
+  background-color: rgba(255, 181, 249, 0);
+  padding: 5px 25px;
+  color: rgb(53, 53, 53);
+  border: 2px solid rgb(255, 181, 249);
+  &:hover {
+    background-color: rgba(255, 181, 249, 1);
+    color: #ffffff;
+  }
+}
+
 </style>

@@ -1,113 +1,183 @@
 <template>
-  <div>
-    <div class="swiper swiperBox content" v-swiper:swiper="swiperOption" ref="swiperBox">
-      <div class="bg">
-        <bg/>
-      </div>
-      <div class="swiper-wrapper">
-        <div class="swiper-slide">
-          <advertising/>
-        </div>
-        <div class="swiper-slide faceIdentify">
-          <h1 class="title">
-            图片特效
-            <p><i>— Photo effects —</i></p>
-          </h1>
-          <Row
-            class="code-row-bg"
-            type="flex"
-            justify="center"
-          >
-            <i-col :xs="0" :sm="2" :md="4" :lg="4"></i-col>
-            <i-col :xs="7" :sm="6" :md="5" :lg="5">
-              <div class="filtera filter-img">
-                <div class="filter__previewbox">
-                  <img src="~/static/img/home/filter01.jpg" class="filter__preview" alt="Preview">
-                  <nuxt-link :to="{name:'imgEffects',params:{newsId:'1'}}" class="filter__label">人像滤镜</nuxt-link>
-                </div>
-              </div>
-              <div class="filterb filter-img">
-                <div class="filter__previewbox">
-                  <img src="~/static/img/home/filter02.jpg" class="filter__preview" alt="Preview">
-                  <nuxt-link :to="{name:'imgEffects',params:{newsId:'2'}}" class="filter__label">风景滤镜</nuxt-link>
-                </div>
-              </div>
-            </i-col>
-            <i-col :xs="10" :sm="8" :md="6" :lg="6">
-              <div class="filterc filter-img">
-                <div class="filter__previewbox">
-                  <img src="~/static/img/home/filter03.jpg" class="filter__preview" alt="Preview">
-                  <nuxt-link :to="{name:'imgEffects',params:{newsId:'3'}}" class="filter__label">人脸美妆</nuxt-link>
-                </div>
-              </div>
-            </i-col>
-            <i-col :xs="7" :sm="6" :md="5" :lg="5">
-              <div class="filtera filter-img">
-                <div class="filter__previewbox">
-                  <img src="~/static/img/home/filter02.jpg" class="filter__preview" alt="Preview">
-                  <nuxt-link :to="{name:'imgEffects',params:{newsId:'4'}}" class="filter__label">人脸变妆</nuxt-link>
-                </div>
-              </div>
-              <div class="filterb filter-img">
-                <div class="filter__previewbox">
-                  <img src="~/static/img/home/filter01.jpg" class="filter__preview" alt="Preview">
-                  <nuxt-link :to="{name:'imgEffects',params:{newsId:'5'}}" class="filter__label">动画贴纸</nuxt-link>
-                </div>
-              </div>
-              </i-col>
-            <i-col :xs="0" :sm="2" :md="4" :lg="4"></i-col>
-          </Row>
-        </div>
-
-        <div class="swiper-slide interestingChat">
-          <h1 class="title">
-            趣味闲聊
-            <p><i>— Photo effects —</i></p>
-          </h1> 
-          <Row
-            class="code-row-bg"
-            type="flex"
-            justify="center"
-          >
-            <i-col :xs="0" :sm="2" :md="4" :lg="4"></i-col>
-            <i-col :xs="24" :sm="20" :md="16" :lg="16" class="interestingChat-content">
-              <div v-for="item in interestingChat" :key="item.id" class="translation">
-                <h1>{{item.title}}</h1>
-                <p>{{item.text}}</p>
-                <nuxt-link :to="{name:'imgIdentify'}">{{item.btn}}</nuxt-link>
-              </div>
-            </i-col>
-            <i-col :xs="0" :sm="2" :md="4" :lg="4"></i-col>
-          </Row>
-        </div>
-
-        <div class="swiper-slide ingEffects">
-          <h1 class="title">
-            图片识别
-            <p><i>— Photo effects —</i></p>
-          </h1> 
-          <Row
-            class="code-row-bg"
-            type="flex"
-            justify="center"
-          >
-            <i-col span="4">1</i-col>
-            <i-col span="4">1</i-col>
-            <i-col span="4">1</i-col>
-            <i-col span="4">1</i-col>
-          </Row>
-        </div>
-      </div>
-      <div class="swiper-pagination"  slot="pagination"></div>
+  <div
+    class="swiper swiperBox content"
+    v-swiper:swiper="swiperOption"
+    ref="swiperBox"
+  >
+    <div class="bg">
+      <bgOne/>
     </div>
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">
+        <advertising/>
+      </div>
+      <div class="swiper-slide faceIdentify">
+        <h1 class="title">
+          图片特效
+          <p><i>— Photo effects —</i></p>
+        </h1>
+        <Row
+          class="code-row-bg"
+          type="flex"
+          justify="center"
+        >
+          <i-col :xs="0" :sm="2" :md="4" :lg="4"></i-col>
+          <i-col :xs="7" :sm="6" :md="5" :lg="5">
+            <div class="filtera filter-img">
+              <div class="filter__previewbox">
+                <img
+                  src="~/static/img/home/filter01.jpg"
+                  class="filter__preview" 
+                  alt="Preview"
+                />
+                <nuxt-link
+                  :to="{name:'effects',params:{nameId:'1'}}"
+                  class="filter__label"
+                >人像滤镜</nuxt-link>
+              </div>
+            </div>
+            <div class="filterb filter-img">
+              <div class="filter__previewbox">
+                <img
+                  src="~/static/img/home/filter02.jpg"
+                  class="filter__preview"
+                  alt="Preview"
+                />
+                <nuxt-link
+                  :to="{name:'effects',params:{nameId:'2'}}"
+                  class="filter__label"
+                >风景滤镜</nuxt-link>
+              </div>
+            </div>
+          </i-col>
+          <i-col :xs="10" :sm="8" :md="6" :lg="6">
+            <div class="filterc filter-img">
+              <div class="filter__previewbox">
+                <img
+                  src="~/static/img/home/filter03.jpg"
+                  class="filter__preview"
+                  alt="Preview"
+                />
+                <nuxt-link
+                  :to="{name:'effects',params:{nameId:'3'}}"
+                  class="filter__label"
+                >人脸美妆</nuxt-link>
+              </div>
+            </div>
+          </i-col>
+          <i-col :xs="7" :sm="6" :md="5" :lg="5">
+            <div class="filtera filter-img">
+              <div class="filter__previewbox">
+                <img
+                  src="~/static/img/home/filter02.jpg"
+                  class="filter__preview"
+                  alt="Preview"
+                />
+                <nuxt-link
+                  :to="{name:'effects',params:{nameId:'4'}}"
+                  class="filter__label"
+                >人脸变妆</nuxt-link>
+              </div>
+            </div>
+            <div class="filterb filter-img">
+              <div class="filter__previewbox">
+                <img
+                  src="~/static/img/home/filter01.jpg"
+                  class="filter__preview"
+                  alt="Preview"
+                />
+                <nuxt-link
+                  :to="{name:'effects',params:{nameId:'5'}}"
+                  class="filter__label"
+                >动画贴纸</nuxt-link>
+              </div>
+            </div>
+            </i-col>
+          <i-col :xs="0" :sm="2" :md="4" :lg="4"></i-col>
+        </Row>
+      </div>
+
+      <div class="swiper-slide interestingChat">
+        <h1 class="title">
+          趣味闲聊
+          <p><i>— Photo effects —</i></p>
+        </h1> 
+        <Row
+          class="code-row-bg"
+          type="flex"
+          justify="center"
+        >
+          <i-col :xs="0" :sm="2" :md="4" :lg="4"></i-col>
+          <i-col :xs="24" :sm="20" :md="16" :lg="16"
+            class="interestingChat-content"
+          >
+            <div
+              v-for="item in interestingChat"
+              :key="item.id"
+              class="translation"
+            >
+              <h1>{{item.title}}</h1>
+              <p>{{item.text}}</p>
+              <nuxt-link :to="{name:'chat'}">{{item.btn}}</nuxt-link>
+            </div>
+          </i-col>
+          <i-col :xs="0" :sm="2" :md="4" :lg="4"></i-col>
+        </Row>
+      </div>
+
+      <div class="swiper-slide computerVisual">
+        <h1 class="title">
+          计算机视觉
+          <p><i>— Photo effects —</i></p>
+        </h1> 
+        <Row
+          class="code-row-bg"
+          type="flex"
+          justify="center"
+        >
+          <i-col :xs="0" :sm="2" :md="4" :lg="4"></i-col>
+          <i-col :xs="24" :sm="20" :md="16" :lg="16"
+            class="computerVisual-content"
+          >
+            <div class="content-text">
+              <h1>图片识别</h1>
+              <p>图片识别依托腾讯领先的图片处理技术和深度识别引擎，
+                可以快速、准确地识别图片内容信息并自动生成文字描述。
+                标签范围涵盖上百种热词，数百种场景及数千种物体分类，
+                全面地支持了不同维度层次的图片语义信息提取，更有美食
+                等垂类识别，目前该技术在图片识别领域位于世界前列。
+              </p> 
+            </div>
+            <div class='content-label'>
+              <div>
+                <nuxt-link
+                  :to="{name:'visual',params:{nameId:'1'}}"
+                >看图说话</nuxt-link>
+                <nuxt-link
+                  :to="{name:'visual',params:{nameId:'2'}}"
+                >标签识别</nuxt-link>
+                <nuxt-link 
+                  :to="{name:'visual',params:{nameId:'3'}}"
+                >模糊识别</nuxt-link>
+                <nuxt-link
+                  :to="{name:'visual',params:{nameId:'4'}}"
+                >美食识别</nuxt-link>
+              </div>
+            </div>
+          </i-col>
+          <i-col :xs="0" :sm="2" :md="4" :lg="4"></i-col>
+        </Row>
+      </div>
+    </div>
+    <div class="swiper-pagination"  slot="pagination"></div>
   </div>
 </template>
 <script>
-import bg from '~/assets/bg.vue'
+import bgOne from '~/assets/bgOne.vue'
 import advertising from '~/components/advertising.vue'
 export default {
   components: {
-    bg,
+    bgOne,
     advertising
   },
   data () {
@@ -354,33 +424,134 @@ export default {
   .interestingChat {
     text-align: center;
     .interestingChat-content {
-      margin-top: 8%;
+      margin-top: 5%;
       display: flex;
       flex-direction: row;
       justify-content: space-around;
       align-items: center;
       .translation {
+        padding: 35px;
         outline: 2px solid white;
-        outline-offset: -20px;
+        outline-offset: -15px;
         width: 30%;
-        height: 300px;
-        background-color:  rgba(243, 218, 255, 0.698);
+        height: 320px;
+        background-color:  rgba(243, 218, 255, 0.329);
         text-align: left;
         position: relative;
         h1 {
-          margin: 10% 10% 5%;
           color: rgb(255, 255, 255);
         }
         p {
-          margin: 0 10%;
+          margin-top: 15px;
           color: rgb(255, 255, 255);
           font-size: 14px;
           text-indent: 2em;
         }
         a {
           position: absolute;
-          bottom: 40px;
-          right: 50px;
+          bottom: 16px;
+          right: 20px;
+          font-size: 12pt;
+          font-family: sans-serif;
+          color: rgb(255, 181, 249);
+          text-decoration: none;
+          letter-spacing: 2px;
+          text-align: center;
+          padding: 10px 15px;
+          &:after {
+            width: 100%;
+            height: 0;
+            background: rgb(255, 181, 249);
+            content: '';
+            position: absolute;
+            top: 75%;
+            left: 0;
+            opacity: 0;
+            -webkit-transition: all 0.3s ease-out;
+            transition: all 0.3s ease-out;
+            margin: auto;
+          }
+          &:hover {
+            &:after {
+              opacity: 1;
+              top: 100%;
+              height: 2px;
+            }
+          }
+        }
+      }
+    }
+  }
+  .computerVisual {
+    .computerVisual-content {
+      margin-top: 5%;
+      outline: 2px solid white;
+      outline-offset: -20px;
+      padding: 50px 50px;
+      background-color: rgba(243, 218, 255, 0.329);
+      color: rgb(255, 255, 255);
+      text-align: center;
+      .content-text {
+        text-align: left;
+        p {
+          margin: 15px 0;
+          font-size: 14px;
+          text-indent: 2em;
+        }
+      }
+      .content-label {
+        margin-top: 15px;
+        position: relative;
+        div {
+          margin: 50px 0 30px;
+          a {
+            margin: 0 10px;
+            font-size: 12pt;
+            font-family: sans-serif;
+            color: #fff;
+            text-decoration: none;
+            letter-spacing: 2px;
+            position: relative;
+            text-align: center;
+            padding: 15px 50px;
+            width: 150px;
+            &:before {
+              content: '';
+              position: absolute;
+              height: 100%;
+              margin: auto;
+              width: calc(100% + 4px);
+              top: 0;
+              left: -2px;
+              -webkit-transition: all 0.2s ease;
+              transition: all 0.2s ease;
+              -webkit-transition-delay: 0.2s;
+              transition-delay: 0.2s;
+            }
+            &:after {
+              content: '';
+              position: absolute;
+              height: 100%;
+              margin: auto;
+              border-top: 2px solid #fff;
+              border-bottom: 2px solid #fff;
+              width: 0;
+              top: 0;
+              left: 50%;
+              -webkit-transition: all 0.2s ease;
+              transition: all 0.2s ease;
+            }
+            &:hover {
+              &:before {
+                height: 0;
+                top: 50%;
+              }
+              &:after {
+                width: calc(100% + 4px);
+                left: -2px;
+              }
+            }
+          }
         }
       }
     }

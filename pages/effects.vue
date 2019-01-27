@@ -1,8 +1,8 @@
 <template>
-  <div class="page">
+  <div class="box">
 
     <div class="bg">
-      <bgg/>
+      <bgTwo/>
     </div>
 
     <Row class="row">
@@ -23,13 +23,19 @@
                 @change="changeImg($event)"
               >
             </button>
-            <button class="btn-upload" @click="originalImage"><span>原图</span></button>
-            <button class="btn-upload" @click="ageDetection"><span>年龄检测</span></button>
+            <button
+              class="btn-upload"
+              @click="originalImage"
+            ><span>原图</span></button>
+            <button
+              class="btn-upload"
+              @click="ageDetection"
+            ><span>年龄检测</span></button>
           </div>
         </div>
 
         <div class="content-effects">
-          <Tabs :value="this.active && this.$route.params.newsId">
+          <Tabs :value="this.active && this.$route.params.nameId">
             <TabPane
               class="effects-switch"
               v-for="(item) in switchFilter"
@@ -62,22 +68,27 @@
       </i-col>
       <i-col :xs="0" :sm="2" :md="3" :lg="4">.</i-col>
     </Row>
-    
+    <div v-show="loading">
+      <loading/>
+    </div>
   </div>
 </template>
 <script>
-import bgg from '~/assets/bgg.vue'
+import loading from '~/assets/loading.vue'
+import bgTwo from '~/assets/bgTwo.vue'
 import global from '~/assets/js/global.js'
 import axios from 'axios'
 import Qs from 'Qs'
 export default {
   components: {
-    bgg
+    bgTwo,
+    loading
   },
   data () {
     return {
+      loading: false,
       active: '1',
-      imgUrl: '',
+      imgUrl: require('~/static/img/imgEffects/ingBg.png'),
       imgUrlBase64: '',
       imgBase64: '',
       value1: 0,
@@ -795,6 +806,7 @@ export default {
   methods: {
     // 上传图片并转码
     changeImg (e) {
+      this.loading = true
       const _this = this
       const imgLimit = 500 // 图片限制大小
       const files = e.target.files
@@ -838,6 +850,7 @@ export default {
               _this.imgUrlBase64 = base64
               let imgBase64 = base64.split(',')
               _this.imgBase64 = imgBase64[1]
+              _this.loading = false
             }
           }
           if (dd < files.length - 1) {
@@ -877,6 +890,7 @@ export default {
     },
     // 年龄检测
     ageDetection () {
+      this.loading = true
       let params = {
         app_id: global.appId,
         time_stamp: global.timeStamp,
@@ -886,12 +900,23 @@ export default {
       const paramter = global.signature(params)
       axios.post('/fcgi-bin/ptu/ptu_faceage', Qs.stringify(paramter))
         .then(res => {
-          this.imgUrl = 'data:image/png;base64,' + res.data.data.image
+          this.loading = false
+          if (res.data.ret === 0) {
+            this.imgUrl = 'data:image/png;base64,' + res.data.data.image
+          } else if (res.data.ret === 16390) {
+            this.$Message.error('刷新页面在尝试！')
+          } else if (res.data.ret === 16402) {
+            this.$Message.error('未检出到人脸！')
+          }
         }).catch(err => {
+          this.loading = false
+          this.$Message.error('抱歉，网络异常！')
           console.log(err)
         })
     },
+    // 人像滤镜
     filterPortrait (img) {
+      this.loading = true
       let params = {
         app_id: global.appId,
         time_stamp: global.timeStamp,
@@ -902,12 +927,23 @@ export default {
       const paramter = global.signature(params)
       axios.post('/fcgi-bin/ptu/ptu_imgfilter', Qs.stringify(paramter))
         .then(res => {
-          this.imgUrl = 'data:image/png;base64,' + res.data.data.image
+          this.loading = false
+          if (res.data.ret === 0) {
+            this.imgUrl = 'data:image/png;base64,' + res.data.data.image
+          } else if (res.data.ret === 16390) {
+            this.$Message.error('刷新页面在尝试！')
+          } else if (res.data.ret === 16402) {
+            this.$Message.error('未检出到人脸！')
+          }
         }).catch(err => {
+          this.loading = false
+          this.$Message.error('抱歉，网络异常！')
           console.log(err)
         })
     },
+    // 风景滤镜
     filterScenery (img) {
+      this.loading = true
       let params = {
         app_id: global.appId,
         time_stamp: global.timeStamp,
@@ -919,12 +955,23 @@ export default {
       const paramter = global.signature(params)
       axios.post('/fcgi-bin/vision/vision_imgfilter', Qs.stringify(paramter))
         .then(res => {
-          this.imgUrl = 'data:image/png;base64,' + res.data.data.image
+          this.loading = false
+          if (res.data.ret === 0) {
+            this.imgUrl = 'data:image/png;base64,' + res.data.data.image
+          } else if (res.data.ret === 16390) {
+            this.$Message.error('刷新页面在尝试！')
+          } else if (res.data.ret === 16402) {
+            this.$Message.error('未检出到人脸！')
+          }
         }).catch(err => {
+          this.loading = false
+          this.$Message.error('抱歉，网络异常！')
           console.log(err)
         })
     },
+    // 人脸美妆
     faceMakeup (img) {
+      this.loading = true
       let params = {
         app_id: global.appId,
         time_stamp: global.timeStamp,
@@ -935,13 +982,23 @@ export default {
       const paramter = global.signature(params)
       axios.post('/fcgi-bin/ptu/ptu_facecosmetic', Qs.stringify(paramter))
         .then(res => {
-          this.imgUrl = 'data:image/png;base64,' + res.data.data.image
+          this.loading = false
+          if (res.data.ret === 0) {
+            this.imgUrl = 'data:image/png;base64,' + res.data.data.image
+          } else if (res.data.ret === 16390) {
+            this.$Message.error('刷新页面在尝试！')
+          } else if (res.data.ret === 16402) {
+            this.$Message.error('未检出到人脸！')
+          }
         }).catch(err => {
+          this.loading = false
+          this.$Message.error('抱歉，网络异常！')
           console.log(err)
         })
     },
+    // 人脸变妆
     faceDrag (img) {
-      // console.log(img + '===')
+      this.loading = true
       let params = {
         app_id: global.appId,
         time_stamp: global.timeStamp,
@@ -952,12 +1009,23 @@ export default {
       const paramter = global.signature(params)
       axios.post('/fcgi-bin/ptu/ptu_facedecoration', Qs.stringify(paramter))
         .then(res => {
-          this.imgUrl = 'data:image/png;base64,' + res.data.data.image
+          this.loading = false
+          if (res.data.ret === 0) {
+            this.imgUrl = 'data:image/png;base64,' + res.data.data.image
+          } else if (res.data.ret === 16390) {
+            this.$Message.error('刷新页面在尝试！')
+          } else if (res.data.ret === 16402) {
+            this.$Message.error('未检出到人脸！')
+          }
         }).catch(err => {
+          this.loading = false
+          this.$Message.error('抱歉，网络异常！')
           console.log(err)
         })
     },
+    // 大头贴
     photo (img) {
+      this.loading = true
       let params = {
         app_id: global.appId,
         time_stamp: global.timeStamp,
@@ -968,8 +1036,17 @@ export default {
       const paramter = global.signature(params)
       axios.post('/fcgi-bin/ptu/ptu_facesticker', Qs.stringify(paramter))
         .then(res => {
-          this.imgUrl = 'data:image/png;base64,' + res.data.data.image
+          this.loading = false
+          if (res.data.ret === 0) {
+            this.imgUrl = 'data:image/png;base64,' + res.data.data.image
+          } else if (res.data.ret === 16390) {
+            this.$Message.error('刷新页面在尝试！')
+          } else if (res.data.ret === 16402) {
+            this.$Message.error('未检出到人脸！')
+          }
         }).catch(err => {
+          this.loading = false
+          this.$Message.error('抱歉，网络异常！')
           console.log(err)
         })
     }
@@ -977,7 +1054,7 @@ export default {
 }
 </script>
 <style scoped lang="less">
-.page {
+.box {
   .bg {
     position: fixed;
     z-index: -1000;
@@ -1006,18 +1083,20 @@ export default {
         height: 65%;
         margin: 5% 0% 3%;
         .content-img {
-          background-image: url('../static/img/imgEffects/ingBg.png');
-          background-position: center;
-          background-repeat: no-repeat;
           text-align: center;
           width: 60%;
           height: 100%;
           margin-left: 5%;
           background-color: rgb(255, 255, 255);
+          display: flex;
+          align-items: center;
           img {
             max-width: 100%;
             max-height: 100%;
             margin: auto;
+            align-items: center;
+            min-width: 100%;
+            min-height: auto;
           }
         }
         .content-btn {
