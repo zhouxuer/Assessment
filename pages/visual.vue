@@ -11,7 +11,8 @@
 
         <div class="content">
           <div ref="img" class="content-img">
-            <img :src="imgUrl">
+            <img v-show="!imgUrl" src="~/static/img/imgEffects/ingBg.png">
+            <img v-show="imgUrl" :src="imgUrl">
           </div>
 
           <div class="git-content">
@@ -84,7 +85,7 @@ export default {
     return {
       loading: false,
       active: '1',
-      imgUrl: require('~/static/img/imgEffects/ingBg.png'),
+      imgUrl: '',
       imgUrlBase64: '',
       imgBase64: '',
       seeImgVal: '',
@@ -104,6 +105,10 @@ export default {
   methods: {
     // 上传图片并转码
     changeImg (e) {
+      this.seeImgVal = ''
+      this.moreLabelVal = ''
+      this.fuzzyImgVal = ''
+      this.foodImgVal = ''
       this.loading = true
       const _this = this
       const imgLimit = 500 // 图片限制大小
@@ -164,22 +169,24 @@ export default {
       if (this.imgUrl !== '') {
         switch (name) {
           case '1':
-            this.gitSeeImg()
+            if (!this.seeImgVal) {
+              this.gitSeeImg()
+            }
             break
           case '2':
-            this.gitMoreLabel()
+            if (!this.moreLabelVal) {
+              this.gitMoreLabel()
+            }
             break
           case '3':
-            this.gitFuzzyImg()
+            if (!this.fuzzyImgVal) {
+              this.gitFuzzyImg()
+            }
             break
           case '4':
-            this.gitFoodImg()
-            break
-          case '5':
-            this.gitScenario()
-            break
-          case '6':
-            this.gitObject()
+            if (!this.foodImgVal) {
+              this.gitFoodImg()
+            }
             break
           default:
         }
@@ -188,7 +195,6 @@ export default {
     viewData () {
       this.loading = true
       if (this.imgUrl !== '') {
-        console.log(this.tabsName, '111')
         switch (this.tabsName) {
           case '1':
             this.gitSeeImg()
@@ -202,15 +208,10 @@ export default {
           case '4':
             this.gitFoodImg()
             break
-          case '5':
-            this.gitScenario()
-            break
-          case '6':
-            this.gitObject()
-            break
           default:
         }
       } else {
+        this.loading = false
         this.$Message.error('请先上传图片在尝试哦！')
       }
     },
@@ -232,6 +233,8 @@ export default {
             this.seeImgVal = res.data.data.text
           } else if (res.data.ret === 16390) {
             this.$Message.error('刷新页面在尝试！')
+          } else if (res.data.ret === 16397) {
+            this.$Message.error('图片过大，请上传小于1MB的图片！')
           }
         }).catch(err => {
           this.loading = false
@@ -254,9 +257,10 @@ export default {
           this.loading = false
           if (res.data.ret === 0) {
             this.moreLabelVal = res.data.data.tag_list
-            console.log(this.moreLabelVal)
           } else if (res.data.ret === 16390) {
             this.$Message.error('刷新页面在尝试！')
+          } else if (res.data.ret === 16397) {
+            this.$Message.error('图片过大，请上传小于1MB的图片！')
           }
         }).catch(err => {
           this.loading = false
@@ -286,6 +290,8 @@ export default {
             }
           } else if (res.data.ret === 16390) {
             this.$Message.error('刷新页面在尝试！')
+          } else if (res.data.ret === 16397) {
+            this.$Message.error('图片过大，请上传小于1MB的图片！')
           }
         }).catch(err => {
           this.loading = false
@@ -315,6 +321,8 @@ export default {
             }
           } else if (res.data.ret === 16390) {
             this.$Message.error('刷新页面在尝试！')
+          } else if (res.data.ret === 16397) {
+            this.$Message.error('图片过大，请上传小于1MB的图片！')
           }
         }).catch(err => {
           this.loading = false
@@ -368,8 +376,6 @@ export default {
             max-height: 100%;
             margin: auto;
             align-items: center;
-            min-width: 100%;
-            min-height: auto;
           }
         }
         .git-content {

@@ -11,7 +11,8 @@
 
         <div class="ssss">
           <div ref="img" class="content-img">
-            <img :src="imgUrl">
+            <img v-show="!imgUrl" src="~/static/img/imgEffects/ingBg.png">
+            <img v-show="imgUrl" :src="imgUrl">
           </div>
 
           <div class="content-btn">
@@ -88,7 +89,7 @@ export default {
     return {
       loading: false,
       active: '1',
-      imgUrl: require('~/static/img/imgEffects/ingBg.png'),
+      imgUrl: '',
       imgUrlBase64: '',
       imgBase64: '',
       value1: 0,
@@ -828,9 +829,6 @@ export default {
             image.onload = function () {
               // 默认按比例压缩
               let [w, h] = [image.width, image.height]
-              // let scale = w / h
-              // w = 300
-              // h = w / scale
               // 默认图片质量为0.7，quality值越小，所绘制出的图像越模糊
               let quality = 0.7
               // 生成canvas
@@ -860,6 +858,7 @@ export default {
           }
         }, 1000)
       }
+      _this.loading = false
     },
     // 特效
     createEffects (effects, img) {
@@ -1095,8 +1094,6 @@ export default {
             max-height: 100%;
             margin: auto;
             align-items: center;
-            min-width: 100%;
-            min-height: auto;
           }
         }
         .content-btn {
